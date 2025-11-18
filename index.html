@@ -4,106 +4,71 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>♡キャラ学生証ファクトリー♡</title>
-  <meta name="description" content="横長で超かわいい！みりんてゃ風学生証メーカー♡">
   <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
-      --main: #ff69b4;
-      --text: #6B4F3A;
+      --grid: url('https://www.transparenttextures.com/patterns/graphy.png');
       --bg: #fffaf0;
-      --grid: rgba(255,182,193,0.12);
-      --photo-bg: #e6f2ff;
       --border: #d8c4a8;
+      --photo-bg: #e6f2ff;
+      --text: #6B4F3A;
     }
     body {
-      margin: 0;
+      margin: 0; padding: 20px 0; min-height: 100vh;
       font-family: 'Kiwi Maru', sans-serif;
       background: linear-gradient(#fff0f8, #ffe4f0);
-      padding: 20px 0;
-      min-height: 100vh;
     }
     body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: url('https://www.transparenttextures.com/patterns/graphy.png');
-      opacity: 0.3;
-      pointer-events: none;
+      content: ""; position: fixed; inset: 0;
+      background: var(--grid); opacity: 0.3; pointer-events: none;
     }
     .container { max-width: 1100px; margin: 0 auto; }
     .header {
       background: linear-gradient(90deg, #ffb3d9, #ff69b4);
-      color: white; text-align: center; padding: 25px; font-size: 28px; font-weight: bold; border-radius: 20px 20px 0 0;
+      color: white; text-align: center; padding: 25px; font-size: 28px; font-weight: bold;
+      border-radius: 20px 20px 0 0;
     }
-    .main { padding: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .main { padding: 30px; display: grid; grid-template-columns: 1fr 580px; gap: 40px; }
     @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
 
     .form-area {
       background: #fffafa; padding: 25px; border-radius: 20px; border: 3px dashed #ffd1dc;
     }
     label { display: block; margin: 15px 0 6px; font-weight: bold; color: #b36c84; }
-    input, textarea { width: 100%; padding: 12px; border: 2px solid #ffd1dc; border-radius: 10px; box-sizing: border-box; }
+    input, textarea, select { width: 100%; padding: 12px; border: 2px solid #ffd1dc; border-radius: 10px; box-sizing: border-box; }
     button {
-      background: var(--main); color: white; border: none; padding: 12px 20px; border-radius: 30px;
+      background: #ff69b4; color: white; border: none; padding: 12px 20px; border-radius: 30px;
       font-weight: bold; cursor: pointer; margin: 8px 4px 0 0;
     }
 
-    /* ここからが横長カード本体 */
+    /* 横長カード（固定サイズ） */
     #card {
-      aspect-ratio: 86 / 54;   /* クレカサイズ */
-      background: var(--bg);
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
-      color: var(--text);
-      font-size: 15px;
-      line-height: 1.5;
-      position: relative;
+      width: 580px; height: 366px;   /* 86:54 比率 */
+      background: var(--bg); border-radius: 20px; padding: 24px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2); position: relative;
+      color: var(--text); font-size: 15px; line-height: 1.6;
+      display: grid; grid-template-columns: 200px 1fr; gap: 24px;
       overflow: hidden;
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 25px;
     }
     .photo-area {
-      width: 220px; height: 220px;
-      background: var(--photo-bg);
-      border: 9px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+      width: 200px; height: 200px; background: var(--photo-bg);
+      border: 9px solid var(--border); border-radius: 16px; overflow: hidden;
     }
     .photo-area img { width: 100%; height: 100%; object-fit: cover; }
+    .logo-img { position: absolute; top: 16px; right: 20px; width: 56px; height: 56px; object-fit: contain; }
 
-    .right-area {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .school-title {
-      font-size: 26px; font-weight: bold; text-align: center; margin-bottom: 10px;
-    }
-    .logo-img {
-      position: absolute; top: 15px; right: 20px; width: 55px; height: 55px; object-fit: contain;
-    }
-    .basic-info { font-size: 16px; }
-    .basic-info div { margin: 7px 0; }
-    .name { font-size: 32px !important; font-weight: bold; color: #d14a8a; }
-    .extra-info { margin-top: 15px; font-size: 14px; }
-    .extra-info div { margin: 5px 0; }
+    .right-area { display: flex; flex-direction: column; justify-content: space-between; }
+    .school-title { font-size: 24px; font-weight: bold; text-align: center; }
+    .name { font-size: 32px; font-weight: bold; }
+    .info-line { margin: 6px 0; white-space: nowrap; }
+    .extra-info { font-size: 14px; margin-top: 12px; }
     .oneline {
-      margin-top: auto;
-      padding: 14px;
-      background: rgba(255,255,255,0.75);
-      border: 2px dashed #ffd1dc;
-      border-radius: 12px;
-      text-align: center;
-      font-style: italic;
-      font-size: 16px;
+      margin-top: auto; padding: 14px; background: rgba(255,255,255,0.75);
+      border: 2px dashed #ffd1dc; border-radius: 12px; text-align: center; font-style: italic;
     }
-
     .footer { text-align: center; padding: 30px; background: #fff0f5; }
-    .footer a { color: var(--main); font-weight: bold; text-decoration: none; }
+    .footer a { color: #ff69b4; font-weight: bold; text-decoration: none; }
   </style>
 </head>
 <body>
@@ -113,25 +78,32 @@
   
   <div class="main">
     <div class="form-area">
-      <label>学校名</label><input type="text" id="school" value="とりの丘学園">
+      <label>学校名</label><input type="text" id="school" placeholder="例：とりの丘学園">
 
-      <label>名前（ふりがなも可）</label><input type="text" id="name" value="萩枝 美琳（はぎえだ みりん）">
+      <label>名前（ふりがなも可）</label><input type="text" id="name" placeholder="例：萩枝 美琳（はぎえだ みりん）">
 
-      <label>学年・クラス（任意）</label><input type="text" id="grade" placeholder="1年A組など">
-      <label>学籍番号／ID（任意）</label><input type="text" id="studentId" placeholder="000322など">
+      <label>名前の色</label>
+      <select id="nameColor">
+        <option value="#d14a8a">ピンク（女の子向け）</option>
+        <option value="#4169e1">青（男の子向け）</option>
+        <option value="#8b4513">茶色（中性的）</option>
+      </select>
 
-      <label>性別</label><input type="text" id="gender" value="女">
-      <label>誕生日</label><input type="text" id="birthday" value="3月20日">
-      <label>血液型</label><input type="text" id="blood" value="A型">
-      <label>MBTI</label><input type="text" id="mbti" value="ENFP">
-      <label>出身地</label><input type="text" id="from" value="お菓子の国">
+      <label>学年・クラス（任意）</label><input type="text" id="grade">
+      <label>学籍番号／ID（任意）</label><input type="text" id="studentId">
 
-      <label>性格</label><input type="text" id="personality" value="甘えん坊でいたずら好き">
-      <label>モチーフ</label><input type="text" id="motif" value="黒猫">
-      <label>好きなもの</label><input type="text" id="like" value="甘いお菓子・お昼寝・かまってくれる人">
-      <label>苦手なもの</label><input type="text" id="hate" value="寂しさ・早起き">
+      <label>性別（任意）</label><input type="text" id="gender">
+      <label>誕生日（任意）</label><input type="text" id="birthday">
+      <label>血液型（任意）</label><input type="text" id="blood">
+      <label>MBTI（任意）</label><input type="text" id="mbti">
+      <label>出身地（任意）</label><input type="text" id="from">
 
-      <label>ひとこと</label><textarea id="oneline" rows="2">えへへ♡かまってくれなきゃイタズラしちゃうぞ〜</textarea>
+      <label>性格（任意）</label><input type="text" id="personality">
+      <label>モチーフ（任意）</label><input type="text" id="motif">
+      <label>好きなもの（任意）</label><input type="text" id="like">
+      <label>苦手なもの（任意）</label><input type="text" id="hate">
+
+      <label>ひとこと（任意）</label><textarea id="oneline" rows="2"></textarea>
 
       <label>顔写真アップロード</label><input type="file" id="photo" accept="image/*">
       <label>右上ロゴ画像（任意）</label><input type="file" id="logo" accept="image/*">
@@ -139,35 +111,22 @@
       <div style="margin-top:20px;">
         <button onclick="update()">プレビュー更新</button>
         <button onclick="save()">画像保存♡</button>
-        <button onclick="share('line')">LINEでシェア</button>
-        <button onclick="share('x')">Xでシェア</button>
+        <button onclick="nativeShare()">共有する</button>
       </div>
     </div>
 
-    <!-- 横長カード本体 -->
-    <div style="display:flex; justify-content:center; align-items:center;">
+    <div style="display:flex;justify-content:center;">
       <div id="card">
         <img src="" id="prevLogo" class="logo-img" style="display:none;">
         <div class="photo-area"><img src="" id="prevPhoto" style="display:none;"></div>
         <div class="right-area">
           <div>
-            <div class="school-title" id="prevSchool">とりの丘学園 学生証</div>
-            <div class="basic-info">
-              <div class="name" id="prevName">萩枝 美琳（はぎえだ みりん）</div>
-              <div id="prevGradeLine" style="display:none;">学年：<span id="prevGrade"></span></div>
-              <div id="prevIdLine" style="display:none;">学籍番号：<span id="prevStudentId"></span></div>
-              <div>性別：<span id="prevGender">女</span></div>
-              <div>誕生日：<span id="prevBirthday">3月20日</span>　血液型：<span id="prevBlood">A型</span></div>
-              <div>MBTI：<span id="prevMbti">ENFP</span>　出身地：<span id="prevFrom">お菓子の国</span></div>
-            </div>
-            <div class="extra-info">
-              <div>性格：<span id="prevPersonality">-</span></div>
-              <div>モチーフ：<span id="prevMotif">-</span></div>
-              <div>好き：<span id="prevLike">-</span></div>
-              <div>苦手：<span id="prevHate">-</span></div>
-            </div>
+            <div class="school-title" id="prevSchool">学生証</div>
+            <div class="name" id="prevName">-</div>
+            <div id="lines"></div>
+            <div class="extra-info" id="extra"></div>
           </div>
-          <div class="oneline" id="prevOneline">えへへ♡かまってくれなきゃイタズラしちゃうぞ〜</div>
+          <div class="oneline" id="prevOneline">-</div>
         </div>
       </div>
     </div>
@@ -192,43 +151,59 @@
   document.getElementById('logo').addEventListener('change', e => preview(e.target.files[0], 'prevLogo'));
 
   function update() {
-    document.getElementById('prevSchool').textContent = (document.getElementById('school').value || '〇〇学園') + ' 学生証';
-    document.getElementById('prevName').textContent = document.getElementById('name').value || '名前';
-    document.getElementById('prevGender').textContent = document.getElementById('gender').value || '-';
-    document.getElementById('prevBirthday').textContent = document.getElementById('birthday').value || '-';
-    document.getElementById('prevBlood').textContent = document.getElementById('blood').value || '-';
-    document.getElementById('prevMbti').textContent = document.getElementById('mbti').value || '-';
-    document.getElementById('prevFrom').textContent = document.getElementById('from').value || '-';
-    document.getElementById('prevPersonality').textContent = document.getElementById('personality').value || '-';
-    document.getElementById('prevMotif').textContent = document.getElementById('motif').value || '-';
-    document.getElementById('prevLike').textContent = document.getElementById('like').value || '-';
-    document.getElementById('prevHate').textContent = document.getElementById('hate').value || '-';
-    document.getElementById('prevOneline').textContent = document.getElementById('oneline').value || 'ひとこと';
+    const school = document.getElementById('school').value.trim();
+    document.getElementById('prevSchool').textContent = school ? school + ' 学生証' : '学生証';
 
-    // 学年・ID
-    const grade = document.getElementById('grade').value.trim();
-    document.getElementById('prevGradeLine').style.display = grade ? 'block' : 'none';
-    if (grade) document.getElementById('prevGrade').textContent = grade;
+    const name = document.getElementById('name').value.trim();
+    const nameEl = document.getElementById('prevName');
+    nameEl.textContent = name || '-';
+    nameEl.style.color = document.getElementById('nameColor').value;
 
-    const id = document.getElementById('studentId').value.trim();
-    document.getElementById('prevIdLine').style.display = id ? 'block' : 'none';
-    if (id) document.getElementById('prevStudentId').textContent = id;
+    const lines = [];
+    const add = (label, id) => {
+      const val = document.getElementById(id).value.trim();
+      if (val) lines.push(`${label}：${val}`);
+    };
+    add('学年', 'grade');
+    add('学籍番号', 'studentId');
+    add('性別', 'gender');
+    add('誕生日', 'birthday');
+    add('血液型', 'blood');
+    add('MBTI', 'mbti');
+    add('出身地', 'from');
+    document.getElementById('lines').innerHTML = lines.map(l => `<div class="info-line">${l}</div>`).join('');
+
+    const extra = [];
+    add('性格', 'personality');
+    add('モチーフ', 'motif');
+    add('好き', 'like');
+    add('苦手', 'hate');
+    document.getElementById('extra').innerHTML = extra.map(l => `<div>${l}</div>`).join('');
+
+    const one = document.getElementById('oneline').value.trim();
+    document.getElementById('prevOneline').textContent = one || '-';
   }
 
   function save() {
     html2canvas(document.getElementById('card'), { scale: 3, useCORS: true }).then(canvas => {
-      const link = document.createElement('a');
-      link.download = 'studentcard_' + (document.getElementById('name').value.replace(/[^a-zA-Z0-9]/g,'') || 'oshi') + '.png';
-      link.href = canvas.toDataURL();
-      link.click();
+      const a = document.createElement('a');
+      a.download = 'studentcard.png';
+      a.href = canvas.toDataURL();
+      a.click();
     });
   }
 
-  function share(p) {
-    const url = 'https://mofu-mitsu.github.io/studentcard-maker/';
-    const text = '♡キャラ学生証ファクトリーで作ったよ！♡';
-    if (p==='line') window.open(`https://line.me/R/msg/text/?${encodeURIComponent(text + '\n' + url)}`);
-    if (p==='x') window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`);
+  function nativeShare() {
+    if (navigator.share) {
+      save();
+      setTimeout(() => navigator.share({
+        title: 'キャラ学生証ファクトリー',
+        text: '作った学生証見て〜♡',
+        url: location.href
+      }), 500);
+    } else {
+      alert('このブラウザは共有機能に対応してないよ〜');
+    }
   }
 
   update();
