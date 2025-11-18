@@ -171,8 +171,14 @@
       <label>学校名</label>
       <input type="text" id="school" value="とりの丘学園">
 
-      <label>名前</label>
+      <label>名前（ふりがなも可）</label>
       <input type="text" id="name" value="萩枝 美琳（はぎえだ みりん）">
+
+      <label>学年・クラス（任意）</label>
+      <input type="text" id="grade" placeholder="例：1年A組、留年中、卒業生など">
+
+      <label>学籍番号／ID（任意）</label>
+      <input type="text" id="studentId" placeholder="例：000322、666など">
 
       <label>性別</label>
       <input type="text" id="gender" value="女">
@@ -188,9 +194,6 @@
 
       <label>出身地</label>
       <input type="text" id="from" value="お菓子の国">
-
-      <label>学年（任意）</label>
-      <input type="text" id="grade" placeholder="1年A組など">
 
       <label>性格</label>
       <input type="text" id="personality" value="甘えん坊でいたずら好き">
@@ -233,12 +236,13 @@
         <div>
           <div class="info-basic">
             <div class="name" id="prevName">萩枝 美琳（はぎえだ みりん）</div>
+            <div id="prevGradeLine" style="display:none;">学年：<span id="prevGrade"></span></div>
+            <div id="prevIdLine" style="display:none;">学籍番号：<span id="prevStudentId"></span></div>
             <div>性別：<span id="prevGender">女</span></div>
             <div>誕生日：<span id="prevBirthday">3月20日</span></div>
             <div>血液型：<span id="prevBlood">A型</span></div>
             <div>MBTI：<span id="prevMbti">ENFP</span></div>
             <div>出身地：<span id="prevFrom">お菓子の国</span></div>
-            <div id="prevGrade"></div>
           </div>
           <div class="extra-info">
             <div>性格：<span id="prevPersonality">甘えん坊でいたずら好き</span></div>
@@ -257,7 +261,7 @@
   </div>
 </div>
 
- скрипт>
+<script>
   function preview(file, target) {
     if (!file) return;
     const reader = new FileReader();
@@ -274,17 +278,35 @@
   function update() {
     document.getElementById('prevSchool').innerHTML = (document.getElementById('school').value || '〇〇学園') + ' 学生証';
     document.getElementById('prevName').textContent = document.getElementById('name').value || '名前';
-    document.getElementById('prevGender').textContent = document.getElementById('gender').value;
-    document.getElementById('prevBirthday').textContent = document.getElementById('birthday').value;
-    document.getElementById('prevBlood').textContent = document.getElementById('blood').value;
-    document.getElementById('prevMbti').textContent = document.getElementById('mbti').value;
-    document.getElementById('prevFrom').textContent = document.getElementById('from').value;
-    document.getElementById('prevGrade').textContent = document.getElementById('grade').value;
-    document.getElementById('prevPersonality').textContent = document.getElementById('personality').value;
-    document.getElementById('prevMotif').textContent = document.getElementById('motif').value;
-    document.getElementById('prevLike').textContent = document.getElementById('like').value;
-    document.getElementById('prevHate').textContent = document.getElementById('hate').value;
-    document.getElementById('prevOneline').textContent = document.getElementById('oneline').value;
+    document.getElementById('prevGender').textContent = document.getElementById('gender').value || '-';
+    document.getElementById('prevBirthday').textContent = document.getElementById('birthday').value || '-';
+    document.getElementById('prevBlood').textContent = document.getElementById('blood').value || '-';
+    document.getElementById('prevMbti').textContent = document.getElementById('mbti').value || '-';
+    document.getElementById('prevFrom').textContent = document.getElementById('from').value || '-';
+    document.getElementById('prevPersonality').textContent = document.getElementById('personality').value || '-';
+    document.getElementById('prevMotif').textContent = document.getElementById('motif').value || '-';
+    document.getElementById('prevLike').textContent = document.getElementById('like').value || '-';
+    document.getElementById('prevHate').textContent = document.getElementById('hate').value || '-';
+    document.getElementById('prevOneline').textContent = document.getElementById('oneline').value || 'ひとこと';
+
+    // 学年・学籍番号は空なら非表示
+    const grade = document.getElementById('grade').value.trim();
+    const gradeLine = document.getElementById('prevGradeLine');
+    if (grade) {
+      document.getElementById('prevGrade').textContent = grade;
+      gradeLine.style.display = 'block';
+    } else {
+      gradeLine.style.display = 'none';
+    }
+
+    const id = document.getElementById('studentId').value.trim();
+    const idLine = document.getElementById('prevIdLine');
+    if (id) {
+      document.getElementById('prevStudentId').textContent = id;
+      idLine.style.display = 'block';
+    } else {
+      idLine.style.display = 'none';
+    }
   }
 
   function save() {
@@ -301,16 +323,13 @@
   }
 
   function share(platform) {
-    save();
-    setTimeout(() => {
-      const url = 'https://mofu-mitsu.github.io/studentcard-maker/';
-      const text = '♡キャラ学生証ファクトリーで作ったよ！見て〜';
-      if (platform === 'line') {
-        window.open(`https://line.me/R/msg/text/?${encodeURIComponent(text + '\n' + url)}`);
-      } else if (platform === 'x') {
-        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`);
-      }
-    }, 500);
+    const url = 'https://mofu-mitsu.github.io/studentcard-maker/';
+    const text = '♡キャラ学生証ファクトリーで作ったよ！見て〜♡';
+    if (platform === 'line') {
+      window.open(`https://line.me/R/msg/text/?${encodeURIComponent(text + '\n' + url)}`);
+    } else if (platform === 'x') {
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`);
+    }
   }
 
   // 初期化
