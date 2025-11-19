@@ -24,7 +24,6 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
   <style>
     :root {
       --main: #ff69b4;
@@ -64,21 +63,61 @@
     .name {font-size:36px!important;font-weight:bold;display:block;}
     .sub-right {text-align:right;font-size:16px;line-height:1.5;padding-top:60px;}
     .logo-img {position:absolute;top:-23px;right:-28px;width:80px;height:80px;object-fit:contain;z-index:10;}
-    .middle {display:grid;grid-template-columns:240px 1fr;gap:30px;flex:1;margin-top:-10px;}
+    .middle {display:grid;grid-template-columns:240px 1fr;gap:30px;flex:1;margin-top:-30px;} /* ←写真もっと上に！ */
     .photo-area {width:240px;height:220px;background:var(--photo-bg);border:11px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,0.16);}
     .photo-area img {width:100%;height:100%;object-fit:cover;}
 
-    .info-grid {display:flex;flex-direction:column;gap:11px;margin-top:17px;font-weight:500;}
-    .info-row {display:grid;grid-template-columns:1fr 1fr;gap:25px;}
-    .info-row > div {white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    /* 情報グリッド */
+    .info-grid {
+      display:flex;flex-direction:column;gap:9px;margin-top:17px;
+      align-content:start; /* ←これで抜けた項目も上に詰まる！！ */
+    }
+    .info-row {
+      display:grid;grid-template-columns:1fr 1fr;gap:25px;
+    }
+    .info-row > div:first-child {font-weight:500;}
+    .info-row > div:last-child {font-weight:600;} /* ←右列太くした！！ */
 
-    .oneline-bar {margin-top:auto;padding:18px 26px;background:rgba(255,255,255,0.9);border:3px dashed var(--dash);border-radius:18px;text-align:center;font-style:italic;font-size:18px;flex-shrink:0;}
+    .oneline-bar {
+      margin-top:auto;padding:18px 26px;
+      background:rgba(255,255,255,0.9);border:3px dashed var(--dash);
+      border-radius:18px;text-align:center;font-style:italic;
+      font-size:18px;flex-shrink:0;
+    }
 
+    /* スマホ用 */
     @media (max-width: 900px) {
       .main {grid-template-columns:1fr;padding:20px 15px;gap:30px;}
       .card-wrapper {width:100%;display:flex;justify-content:center;overflow:hidden;}
       #card {transform:scale(0.53);transform-origin:top center;margin-bottom:-170px;min-width:640px;}
-      .info-row {grid-template-columns:1fr !important;}
+      .info-row {grid-template-columns:1fr !important;gap:6px;}
+      .info-row > div:last-child {margin-top:2px;font-weight:600;}
+    }
+
+    /* 超可愛い広告＆フッター復活！！ */
+    .ad-section {
+      text-align:center;padding:28px 20px;
+      background:linear-gradient(135deg,#fff1f9,#ffe4f0);
+      border-top:4px dashed #ff69b4;
+      margin-top:30px;border-radius:0 0 24px 24px;
+    }
+    .ad-title {
+      font-size:22px;font-weight:bold;color:#ff69b4;
+      margin-bottom:18px;text-shadow:0 2px 4px rgba(255,105,180,0.3);
+    }
+    .footer {
+      text-align:center;padding:30px;background:#fff0f5;
+      font-size:20px;
+    }
+    .footer a {
+      color:#ff69b4 !important;font-weight:bold;text-decoration:none;
+      padding:12px 30px;background:white;border:3px solid #ff69b4;
+      border-radius:30px;display:inline-block;
+      box-shadow:0 6px 15px rgba(255,105,180,0.3);
+      transition:all 0.3s;
+    }
+    .footer a:hover {
+      transform:translateY(-4px);box-shadow:0 10px 20px rgba(255,105,180,0.4);
     }
   </style>
 </head>
@@ -153,7 +192,7 @@
   </div>
 
   <div class="footer">
-    <p><a href="https://mofu-mitsu.github.io/">← もふみつ工房 TOPに戻る</a></p>
+    <p><a href="https://mofu-mitsu.github.io/">← もふみつ工房 TOPに戻る ♡</a></p>
   </div>
 </div>
 
@@ -173,7 +212,6 @@
 
   function update(){
     document.getElementById('prevSchool').textContent = document.getElementById('school').value.trim() ? document.getElementById('school').value.trim() + ' 学生証' : '学生証';
-    
     const name = document.getElementById('name').value.trim() || '-';
     const nameEl = document.getElementById('prevName');
     nameEl.textContent = name;
