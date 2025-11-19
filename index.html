@@ -14,89 +14,46 @@
       --grid: url('https://www.transparenttextures.com/patterns/graphy.png');
       --border: #d8c4a8;
       --photo-bg: #e6f2ff;
+      --dash: #b38b67;
     }
-    body {
-      margin: 0; padding: 20px 0; min-height: 100vh;
-      font-family: 'Kiwi Maru', sans-serif;
-      background: linear-gradient(#fff0f8, #ffe4f0);
-    }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .header {
-      background: linear-gradient(90deg, #ffb3d9, #ff69b4);
-      color: white; text-align: center; padding: 25px; font-size: 28px; font-weight: bold;
-      border-radius: 20px 20px 0 0;
-    }
-    .main { padding: 30px; display: grid; grid-template-columns: 1fr 620px; gap: 40px; }
-    @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
+    body {margin:0;padding:20px 0;min-height:100vh;font-family:'Kiwi Maru',sans-serif;background:linear-gradient(#fff0f8,#ffe4f0);}
+    .container {max-width:1100px;margin:0 auto;}
+    .header {background:linear-gradient(90deg,#ffb3d9,#ff69b4);color:white;text-align:center;padding:25px;font-size:28px;font-weight:bold;border-radius:20px 20px 0 0;}
+    .main {padding:30px;display:grid;grid-template-columns:1fr 620px;gap:40px;}
+    @media(max-width:900px){.main{grid-template-columns:1fr;}}
+    .form-area {background:#fffafa;padding:28px;border-radius:20px;border:3px dashed #ffd1dc;}
+    label {display:block;margin:16px 0 6px;font-weight:bold;color:#b36c84;}
+    input,textarea,select {width:100%;padding:12px;border:2px solid #ffd1dc;border-radius:10px;box-sizing:border-box;}
+    input[type="file"]{display:none;}
+    .file-btn {display:inline-block;background:var(--main);color:white;padding:12px 28px;border-radius:30px;cursor:pointer;font-weight:bold;box-shadow:0 4px 10px rgba(255,105,180,0.3);}
+    button {background:var(--main);color:white;border:none;padding:12px 20px;border-radius:30px;font-weight:bold;cursor:pointer;margin:8px 4px 0 0;}
 
-    .form-area {
-      background: #fffafa; padding: 25px; border-radius: 20px; border: 3px dashed #ffd1dc;
-    }
-    label { display: block; margin: 15px 0 6px; font-weight: bold; color: #b36c84; }
-    input, textarea, select { width: 100%; padding: 12px; border: 2px solid #ffd1dc; border-radius: 10px; box-sizing: border-box; }
-    button {
-      background: var(--main); color: white; border: none; padding: 12px 20px; border-radius: 30px;
-      font-weight: bold; cursor: pointer; margin: 8px 4px 0 0;
-    }
-
-    /* 学生証カード本体 */
     #card {
-      width: 620px; height: 380px;
-      background: var(--bg) var(--grid) repeat;
-      background-size: 30px 30px;
-      opacity: 0.95;
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.22);
-      position: relative;
-      color: var(--text);
-      font-size: 15px;
-      line-height: 1.5;
-      overflow: hidden;
+      width:620px;height:380px;
+      background:var(--bg) var(--grid) repeat;
+      background-size:28px 28px;
+      border-radius:24px;padding:26px;
+      box-shadow:0 15px 35px rgba(0,0,0,0.22);
+      position:relative;color:var(--text);font-size:15px;line-height:1.5;overflow:hidden;
     }
-    #card::before {
-      content: ""; position: absolute; inset: 0;
-      background: var(--bg); opacity: 0.92;
-    }
-    .content { position: relative; z-index: 1; height: 100%; display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; }
+    #card::before {content:"";position:absolute;inset:0;background:var(--bg);opacity:0.94;}
+    .content {position:relative;z-index:1;height:100%;display:flex;flex-direction:column;}
 
-    .top-bar {
-      display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 20px;
-    }
-    .school-title { font-size: 26px; font-weight: bold; text-align: left; }
-    .name-sex-motif { text-align: right; font-size: 18px; }
-    .name { font-size: 32px !important; font-weight: bold; display: block; }
-    .logo-img { width: 60px; height: 60px; object-fit: contain; }
+    .top-bar {display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:15px;margin-bottom:10px;}
+    .school-title {font-size:25px;font-weight:bold;}
+    .name-area {text-align:center;}
+    .name {font-size:34px!important;font-weight:bold;display:block;}
+    .sub-right {text-align:right;font-size:16px;line-height:1.4;}
+    .logo-img {width:62px;height:62px;object-fit:contain;}
 
-    .middle {
-      display: grid; grid-template-columns: 220px 1fr; gap: 24px;
-    }
-    .photo-area {
-      width: 220px; height: 220px; background: var(--photo-bg);
-      border: 10px solid var(--border); border-radius: 18px; overflow: hidden;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    }
-    .photo-area img { width: 100%; height: 100%; object-fit: cover; }
+    .middle {display:grid;grid-template-columns:220px 1fr;gap:26px;flex:1;}
+    .photo-area {width:220px;height:220px;background:var(--photo-bg);border:10px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 6px 15px rgba(0,0,0,0.15);}
+    .photo-area img {width:100%;height:100%;object-fit:cover;}
 
-    .info-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; align-content: start;
-      font-size: 15px;
-    }
-    .info-item { white-space: nowrap; }
+    .info-grid {display:grid;gap:10px 20px;align-content:start;font-size:15px;}
+    .info-item {white-space:nowrap;}
 
-    .oneline-bar {
-      padding: 16px 20px;
-      background: rgba(255,255,255,0.8);
-      border: 3px dashed #ffd1dc;
-      border-radius: 16px;
-      text-align: center;
-      font-style: italic;
-      font-size: 17px;
-      margin-top: 12px;
-    }
-
-    .footer { text-align: center; padding: 30px; background: #fff0f5; }
-    .footer a { color: var(--main); font-weight: bold; text-decoration: none; }
+    .oneline-bar {margin-top:16px;padding:16px 22px;background:rgba(255,255,255,0.85);border:3px dashed var(--dash);border-radius:16px;text-align:center;font-style:italic;font-size:17px;}
   </style>
 </head>
 <body>
@@ -107,7 +64,6 @@
   <div class="main">
     <div class="form-area">
       <label>学校名</label><input type="text" id="school" placeholder="例：とりの丘学園">
-
       <label>名前（ふりがなも可）</label><input type="text" id="name" placeholder="例：萩枝 美琳（はぎえだ みりん）">
       <label>名前の色</label>
       <select id="nameColor">
@@ -121,36 +77,37 @@
 
       <label>学年・クラス（任意）</label><input type="text" id="grade">
       <label>学籍番号／ID（任意）</label><input type="text" id="studentId">
+      <label>性格（任意）</label><input type="text" id="personality">
+      <label>容姿（任意）</label><input type="text" id="appearance">
       <label>誕生日（任意）</label><input type="text" id="birthday">
       <label>血液型（任意）</label><input type="text" id="blood">
       <label>出身地（任意）</label><input type="text" id="from">
       <label>MBTI（任意）</label><input type="text" id="mbti">
-      <label>容姿（任意）</label><input type="text" id="appearance" placeholder="例：黒髪ロング、猫耳など">
-      <label>その他（任意）</label><input type="text" id="other" placeholder="自由項目">
-
-      <label>性格（任意）</label><input type="text" id="personality">
+      <label>その他（任意）</label><input type="text" id="other">
       <label>好きなもの（任意）</label><input type="text" id="like">
       <label>苦手なもの（任意）</label><input type="text" id="hate">
 
       <label>ひとこと（任意）</label><textarea id="oneline" rows="2" placeholder="えへへ♡かまってくれなきゃイタズラしちゃうぞ〜"></textarea>
 
-      <label>顔写真アップロード</label><input type="file" id="photo" accept="image/*">
-      <label>右上ロゴ画像（任意）</label><input type="file" id="logo" accept="image/*">
+      <label>顔写真アップロード</label>
+      <label class="file-btn">♡ キャラ画像を選ぶ ♡<input type="file" id="photo" accept="image/*"></label>
+      <label>右上ロゴ画像（任意）</label>
+      <label class="file-btn">♡ ロゴ画像を選ぶ ♡<input type="file" id="logo" accept="image/*"></label>
 
-      <div style="margin-top:20px;">
+      <div style="margin-top:25px;">
         <button onclick="update()">プレビュー更新</button>
         <button onclick="save()">画像保存♡</button>
         <button onclick="nativeShare()">共有する</button>
       </div>
     </div>
 
-    <div style="display:flex;justify-content:center;">
+    <div style="display:flex;justify-content:center;align-items:flex-start;">
       <div id="card">
         <div class="content">
           <div class="top-bar">
             <div class="school-title" id="prevSchool">学生証</div>
-            <div class="name-sex-motif">
-              <div class="name" id="prevName">-</div>
+            <div class="name-area"><div class="name" id="prevName">-</div></div>
+            <div class="sub-right">
               <div id="prevGenderLine">性別：<span id="prevGender">-</span></div>
               <div id="prevMotifLine">モチーフ：<span id="prevMotif">-</span></div>
             </div>
@@ -159,106 +116,65 @@
 
           <div class="middle">
             <div class="photo-area"><img src="" id="prevPhoto" style="display:none;"></div>
-            <div class="info-grid" id="infoGrid">
-              <!-- JSで動的に追加 -->
-            </div>
+            <div class="info-grid" id="infoGrid"></div>
           </div>
 
-          <div class="oneline-bar" id="prevOneline">-</div>
+          <div class="oneline-bar" id="prevOneline">－</div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="footer">
-    <p><a href="https://mofu-mitsu.github.io/">← もふみつ工房 TOPに戻る</a></p>
-  </div>
 </div>
 
 <script>
-  function preview(file, target) {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = document.getElementById(target);
-      img.src = e.target.result;
-      img.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  }
-  document.getElementById('photo').addEventListener('change', e => preview(e.target.files[0], 'prevPhoto'));
-  document.getElementById('logo').addEventListener('change', e => preview(e.target.files[0], 'prevLogo'));
+  function preview(file,target){if(!file)return;const r=new FileReader();r.onload=e=>{document.getElementById(target).src=e.target.result;document.getElementById(target).style.display='block';};r.readAsDataURL(file);}
+  document.getElementById('photo').addEventListener('change',e=>preview(e.target.files[0],'prevPhoto'));
+  document.getElementById('logo').addEventListener('change',e=>preview(e.target.files[0],'prevLogo'));
 
-  function update() {
-    // 学校名
-    const school = document.getElementById('school').value.trim();
-    document.getElementById('prevSchool').textContent = school ? school + ' 学生証' : '学生証';
+  function update(){
+    document.getElementById('prevSchool').textContent=(document.getElementById('school').value.trim()||'')+' 学生証'||'学生証';
+    const name=document.getElementById('name').value.trim()||'-';
+    const nameEl=document.getElementById('prevName');
+    nameEl.textContent=name;
+    nameEl.style.color=document.getElementById('nameColor').value;
 
-    // 名前と色
-    const name = document.getElementById('name').value.trim();
-    const nameEl = document.getElementById('prevName');
-    nameEl.textContent = name || '-';
-    nameEl.style.color = document.getElementById('nameColor').value;
+    const gender=document.getElementById('gender').value.trim();
+    document.getElementById('prevGenderLine').style.display=gender?'block':'none';
+    document.getElementById('prevGender').textContent=gender||'-';
 
-    // 性別・モチーフ
-    const gender = document.getElementById('gender').value.trim();
-    document.getElementById('prevGenderLine').style.display = gender ? 'block' : 'none';
-    document.getElementById('prevGender').textContent = gender || '-';
+    const motif=document.getElementById('motif').value.trim();
+    document.getElementById('prevMotifLine').style.display=motif?'block':'none';
+    document.getElementById('prevMotif').textContent=motif||'-';
 
-    const motif = document.getElementById('motif').value.trim();
-    document.getElementById('prevMotifLine').style.display = motif ? 'block' : 'none';
-    document.getElementById('prevMotif').textContent = motif || '-';
+    const grid=document.getElementById('infoGrid');
+    grid.innerHTML='';
 
-    // 情報グリッド
-    const grid = document.getElementById('infoGrid');
-    grid.innerHTML = '';
-    const items = [
-      ['学年', 'grade'],
-      ['学籍番号', 'studentId'],
-      ['誕生日', 'birthday'],
-      ['血液型', 'blood'],
-      ['出身地', 'from'],
-      ['MBTI', 'mbti'],
-      ['容姿', 'appearance'],
-      ['その他', 'other'],
-      ['性格', 'personality'],
-      ['好き', 'like'],
-      ['苦手', 'hate']
+    const items=[
+      'grade','studentId','personality','appearance','birthday','blood','from','mbti','other','like','hate'
     ];
-    items.forEach(([label, id]) => {
-      const val = document.getElementById(id).value.trim();
-      if (val) {
-        const div = document.createElement('div');
-        div.className = 'info-item';
-        div.innerHTML = `${label}：${val}`;
+    items.forEach(id=>{
+      const val=document.getElementById(id).value.trim();
+      if(val){
+        const label=document.querySelector(`label[for="${id}"]`).textContent.replace(/（任意）|／ID/g,'');
+        const div=document.createElement('div');
+        div.className='info-item';
+        div.textContent=`${label}：${val}`;
         grid.appendChild(div);
       }
     });
 
-    // ひとこと
-    const one = document.getElementById('oneline').value.trim();
-    document.getElementById('prevOneline').textContent = one || '－';
+    document.getElementById('prevOneline').textContent=document.getElementById('oneline').value.trim()||'－';
   }
 
-  function save() {
-    html2canvas(document.getElementById('card'), { scale: 3, useCORS: true, backgroundColor: null }).then(canvas => {
-      const a = document.createElement('a');
-      a.download = 'studentcard.png';
-      a.href = canvas.toDataURL();
-      a.click();
+  function save(){
+    html2canvas(document.getElementById('card'),{scale:3,useCORS:true,backgroundColor:null}).then(c=>{
+      const a=document.createElement('a');a.download='studentcard.png';a.href=c.toDataURL();a.click();
     });
   }
 
-  function nativeShare() {
-    if (navigator.share) {
-      navigator.share({
-        title: 'キャラ学生証作ったよ♡',
-        text: '見てみて〜！',
-        url: location.href
-      });
-    } else {
-      alert('共有できない環境だよ〜');
-    }
+  function nativeShare(){
+    if(navigator.share){navigator.share({title:'キャラ学生証作ったよ♡',url:location.href});}
+    else{alert('共有できないよ〜');}
   }
 
   update();
