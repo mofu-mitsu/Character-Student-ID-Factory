@@ -38,37 +38,44 @@
     .container {max-width:1100px;margin:0 auto;background:white;border-radius:24px;overflow:hidden;box-shadow:0 15px 40px rgba(255,105,180,0.25);}
     .header {background:linear-gradient(90deg,#ffb3d9,#ff69b4);color:white;text-align:center;padding:28px;font-size:30px;font-weight:bold;}
     .main {padding:35px;display:grid;grid-template-columns:1fr 640px;gap:50px;}
-  @media(max-width:900px){
-    .main{grid-template-columns:1fr;padding:20px;gap:30px;}
-  
-    #card {
-      width:100% !important;
-      max-width:100% !important;
-      height:auto !important;
-      min-height:380px !important;
-      padding:20px 16px 24px !important;
-      margin:0 auto;
-      box-sizing:border-box;
-      transform:scale(0.94);
-      transform-origin:top center;
+    /* ★ここからスマホ対策（閉じ括弧ちゃんとあるよ！） */
+    @media(max-width:900px){
+      .main{grid-template-columns:1fr;padding:15px 10px;gap:25px;}
+
+      /* カード全体を強制で画面内に収める */
+      #card{
+        width:100% !important;
+        max-width:100% !important;
+        height:auto !important;
+        min-height:380px;
+        padding:18px 14px 24px !important;
+        margin:0 auto;
+        box-sizing:border-box;
+        transform:scale(0.92);           /* 少し縮小して確実に収まる */
+        transform-origin:top center;
+      }
+
+      .name{font-size:29px !important;}
+      .school-title{font-size:24px;}
+      .sub-right{font-size:14px;padding-top:25px;}
+      .logo-img{top:-14px;right:-14px;width:58px;height:58px;}
+      .photo-area{max-width:230px;height:210px;}
+      .info-grid{font-size:14.5px;}
+      .oneline-bar{font-size:16px;padding:14px 18px;}
+
+      /* 楽天アフィを確実に小さくする最終兵器 */
+      .ad-section{
+        padding:12px 5px !important;
+        overflow:hidden;
+      }
+      .ad-title{font-size:0.95em !important;}
+      /* 楽天が作るiframeやdiv全部に効かせる */
+      .ad-banner *{
+        transform:scale(0.78) !important;
+        transform-origin:top center !important;
+      }
     }
-  
-    .top-bar {grid-template-columns:1fr auto;gap:15px;}
-    .name-area {text-align:left;padding-top:8px;}
-    .name {font-size:30px !important;}
-    .sub-right {text-align:right;padding-top:30px;font-size:14.5px;}
-    .logo-img {top:-16px;right:-16px;width:60px;height:60px;}
-  
-    .middle {grid-template-columns:1fr;gap:18px;margin-top:0;}
-    .photo-area {width:100%;max-width:240px;height:220px;margin:0 auto;}
-    .info-grid {grid-template-columns:1fr;margin-top:8px;font-size:14.8px;}
-    .oneline-bar {margin-top:8px;padding:16px 20px;font-size:16.5px;}
-  
-    /* 楽天アフィ完全縮小 */
-    .ad-section {padding:15px 8px;}
-    .ad-title {font-size:0.95em !important;}
-    .ad-banner > div {transform:scale(0.82) !important;transform-origin:center top;}
-  }
+    /* ★ここまでスマホ対策 */
     .form-area {background:#fffafa;padding:30px;border-radius:20px;border:3px dashed #ffd1dc;}
     label {display:block;margin:16px 0 6px;font-weight:bold;color:#b36c84;}
     input,textarea,select {width:100%;padding:12px;border:2px solid #ffd1dc;border-radius:10px;box-sizing:border-box;}
