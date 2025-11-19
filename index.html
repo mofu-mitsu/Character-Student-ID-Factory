@@ -38,54 +38,50 @@
     .container {max-width:1100px;margin:0 auto;background:white;border-radius:24px;overflow:hidden;box-shadow:0 15px 40px rgba(255,105,180,0.25);}
     .header {background:linear-gradient(90deg,#ffb3d9,#ff69b4);color:white;text-align:center;padding:28px;font-size:30px;font-weight:bold;}
     .main {padding:35px;display:grid;grid-template-columns:1fr 640px;gap:50px;}
-  @media(max-width:900px){
-    .main{
-      grid-template-columns:1fr;
-      padding:15px 10px;
-      gap:20px;
+  @media (max-width:900px) {
+    .main {
+      grid-template-columns: 1fr;
+      padding: 15px 8px;
+      gap: 25px;
+    }
+    /* ★★★★★ これだけで完璧 ★★★★★ */
+    #card {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      padding: 20px 28px 28px !important;   /* PCと同じ固定paddingに戻す */
+      box-sizing: border-box;
+      aspect-ratio: 640 / 400;               /* 16:10強制キープ */
+      transform: scale(0.94) !important;     /* 94%に縮小（スマホでピッタリ収まる黄金比） */
+      transform-origin: top center;
+      border-radius: 26px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
     }
   
-    #card{
-      width:100% !important;
-      max-width:100% !important;
-      height:auto !important;
-      padding:5% 6% !important;           /* 下パディング減らしてバランス戻す */
-      box-sizing:border-box;
-      aspect-ratio:640/400;
-      border-radius:22px;
-      font-size:3.6vw !important;         /* ← これが最強の救世主！！！vwで文字サイズを画面幅比例に強制 */
+    /* ロゴ画像も縮小に合わせて自動調整 */
+    .logo-img {
+      width: 80px !important;
+      height: 80px !important;
+      top: -23px !important;
+      right: -28px !important;
     }
   
-    /* 写真エリア完璧調整 */
-    .middle{
-      grid-template-columns:36% 1fr !important;
-      gap:5%;
-      margin-top:-1.2% !important;
-      align-items:start;
-    }
-    .photo-area{
-      width:100% !important;
-      height:auto !important;
-      aspect-ratio:240/220;
-      border:9px solid var(--border);
-      border-radius:18px;
+    /* 広告との距離確保 */
+    .ad-section {
+      margin-top: 40px !important;
     }
   
-    /* emやめ！！！相対値で全部統一！！！ */
-    .school-title{font-size:1.6em !important;}
-    .name{font-size:2.1em !important;line-height:1.2;}
-    .sub-right{font-size:0.95em !important;padding-top:2.5%;}
-    .logo-img{width:12%;height:12%;top:-3.5%;right:-3%;}
-    .info-grid{font-size:0.98em !important;line-height:1.45;}
-  
-    /* ひとことバー完璧位置！！！ */
-    .oneline-bar{
-      font-size:1.05em !important;
-      padding:3.5% 6% !important;
-      margin:4% 0 4% 0 !important;      /* 下マージン減らして広告と自然に離れる */
-      border-radius:16px;
+    /* それ以外は全部PC版のまま！！！ */
+    .middle,
+    .info-grid,
+    .photo-area,
+    .oneline-bar,
+    .top-bar,
+    .school-title,
+    .name,
+    .sub-right {
+      /* 何も上書きしない → PC版のレイアウトがそのまま縮小される */
     }
-
       /* 楽天アフィを確実に小さくする最終兵器 */
       .ad-section{
         margin-top:35px !important;
