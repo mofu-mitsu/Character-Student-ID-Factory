@@ -39,24 +39,22 @@
     .header {background:linear-gradient(90deg,#ffb3d9,#ff69b4);color:white;text-align:center;padding:28px;font-size:30px;font-weight:bold;}
     .main {padding:35px;display:grid;grid-template-columns:1fr 640px;gap:50px;}
   
-    /* ★スマホ専用：全体を縮小する神ラッパー★ */
-    #page-wrapper {
-      width: 100%;
-    }
+   /* スマホで全体を縮小する神技 */
     @media (max-width: 900px) {
-      #page-wrapper {
-        transform: scale(0.88);           /* 88%縮小でどんなスマホでもピッタリ収まる */
+      html {
+        transform: scale(0.88);
         transform-origin: top center;
-        width: 113.6%;                    /* 縮小分の逆算 */
-        margin: 0 auto;
+        width: 113.6%;   /* 縮小分の逆補正 */
+        overflow-x: hidden;
       }
+      body { width: 100%; }
     }
 
     .container {max-width:1100px;margin:0 auto;background:white;border-radius:24px;overflow:hidden;box-shadow:0 15px 40px rgba(255,105,180,0.25);}
     .header {background:linear-gradient(90deg,#ffb3d9,#ff69b4);color:white;text-align:center;padding:28px;font-size:30px;font-weight:bold;}
     .main {padding:35px;display:grid;grid-template-columns:1fr 640px;gap:50px;}
     @media (max-width:900px) {
-      .main {grid-template-columns:1fr;padding:20px 15px;gap:35px;}
+      .main {grid-template-columns:1fr;gap:40px;padding:20px;}
     }
 
     .form-area {background:#fffafa;padding:30px;border-radius:20px;border:3px dashed #ffd1dc;}
@@ -89,67 +87,65 @@
 </head>
 <body>
 
-<!-- ★ここに神ラッパー追加★ -->
-<div id="page-wrapper">
-  <div class="container">
-    <div class="header">♡ キャラ学生証ファクトリー ♡</div>
-    
-    <div class="main">
-      <div class="form-area">
-        <label>学校名</label><input type="text" id="school" placeholder="例：とりの丘学園">
-        <label>名前（ふりがなも可）</label><input type="text" id="name" placeholder="例：萩枝 美琳（はぎえだ みりん）">
-        <label>名前の色</label>
-        <select id="nameColor">
-          <option value="#d14a8a">ピンク（女の子向け）</option>
-          <option value="#4169e1">青（男の子向け）</option>
-          <option value="#8b4513">茶色（中性的）</option>
-        </select>
-        <label>性別（任意）</label><input type="text" id="gender">
-        <label>モチーフ（任意）</label><input type="text" id="motif">
-        <label>学年・クラス（任意）</label><input type="text" id="grade">
-        <label>学籍番号／ID（任意）</label><input type="text" id="studentId">
-        <label>性格（任意）</label><input type="text" id="personality">
-        <label>容姿（任意）</label><input type="text" id="appearance">
-        <label>誕生日（任意）</label><input type="text" id="birthday">
-        <label>血液型（任意）</label><input type="text" id="blood">
-        <label>出身地（任意）</label><input type="text" id="from">
-        <label>MBTI（任意）</label><input type="text" id="mbti">
-        <label>好きなもの（任意）</label><input type="text" id="like">
-        <label>苦手なもの（任意）</label><input type="text" id="hate">
-        <label>その他（任意）</label><input type="text" id="other">
-        <label>ひとこと（任意）</label><textarea id="oneline" rows="3" placeholder="えへへ♡かまってくれなきゃイタズラしちゃうぞ〜"></textarea>
-        <label>顔写真アップロード</label>
-        <label class="file-btn">♡ キャラ画像を選ぶ ♡<input type="file" id="photo" accept="image/*"></label>
-        <div class="file-info" id="photoInfo"></div>
-        <label>右上ロゴ画像（任意）</label>
-        <label class="file-btn">♡ ロゴ画像を選ぶ ♡<input type="file" id="logo" accept="image/*"></label>
-        <div class="file-info" id="logoInfo"></div>
-        <div style="margin-top:30px;">
-          <button onclick="update()">プレビュー更新</button>
-          <button onclick="save()">画像保存♡</button>
-          <button onclick="nativeShare()">共有する</button>
-        </div>
-      </div>
-
-      <div style="display:flex;justify-content:center;">
-        <div id="card">
-          <div class="top-bar">
-            <div class="school-title" id="prevSchool">学生証</div>
-            <div class="name-area"><div class="name" id="prevName">-</div></div>
-            <div class="sub-right">
-              <div id="prevGenderLine">性別：<span id="prevGender">-</span></div>
-              <div id="prevMotifLine">モチーフ：<span id="prevMotif">-</span></div>
-            </div>
-            <img src="" id="prevLogo" class="logo-img" style="display:none;">
-          </div>
-          <div class="middle">
-            <div class="photo-area"><img src="" id="prevPhoto" style="display:none;"></div>
-            <div class="info-grid" id="infoGrid"></div>
-          </div>
-          <div class="oneline-bar" id="prevOneline">－</div>
-        </div>
+<div class="container">
+  <div class="header">♡ キャラ学生証ファクトリー ♡</div>
+  
+  <div class="main">
+    <div class="form-area">
+      <label>学校名</label><input type="text" id="school" placeholder="例：とりの丘学園">
+      <label>名前（ふりがなも可）</label><input type="text" id="name" placeholder="例：萩枝 美琳（はぎえだ みりん）">
+      <label>名前の色</label>
+      <select id="nameColor">
+        <option value="#d14a8a">ピンク（女の子向け）</option>
+        <option value="#4169e1">青（男の子向け）</option>
+        <option value="#8b4513">茶色（中性的）</option>
+      </select>
+      <label>性別（任意）</label><input type="text" id="gender">
+      <label>モチーフ（任意）</label><input type="text" id="motif">
+      <label>学年・クラス（任意）</label><input type="text" id="grade">
+      <label>学籍番号／ID（任意）</label><input type="text" id="studentId">
+      <label>性格（任意）</label><input type="text" id="personality">
+      <label>容姿（任意）</label><input type="text" id="appearance">
+      <label>誕生日（任意）</label><input type="text" id="birthday">
+      <label>血液型（任意）</label><input type="text" id="blood">
+      <label>出身地（任意）</label><input type="text" id="from">
+      <label>MBTI（任意）</label><input type="text" id="mbti">
+      <label>好きなもの（任意）</label><input type="text" id="like">
+      <label>苦手なもの（任意）</label><input type="text" id="hate">
+      <label>その他（任意）</label><input type="text" id="other">
+      <label>ひとこと（任意）</label><textarea id="oneline" rows="3" placeholder="えへへ♡かまってくれなきゃイタズラしちゃうぞ〜"></textarea>
+      <label>顔写真アップロード</label>
+      <label class="file-btn">♡ キャラ画像を選ぶ ♡<input type="file" id="photo" accept="image/*"></label>
+      <div class="file-info" id="photoInfo"></div>
+      <label>右上ロゴ画像（任意）</label>
+      <label class="file-btn">♡ ロゴ画像を選ぶ ♡<input type="file" id="logo" accept="image/*"></label>
+      <div class="file-info" id="logoInfo"></div>
+      <div style="margin-top:30px;">
+        <button onclick="update()">プレビュー更新</button>
+        <button onclick="save()">画像保存♡</button>
+        <button onclick="nativeShare()">共有する</button>
       </div>
     </div>
+
+    <div style="display:flex;justify-content:center;">
+      <div id="card">
+        <div class="top-bar">
+          <div class="school-title" id="prevSchool">学生証</div>
+          <div class="name-area"><div class="name" id="prevName">-</div></div>
+          <div class="sub-right">
+            <div id="prevGenderLine">性別：<span id="prevGender">-</span></div>
+            <div id="prevMotifLine">モチーフ：<span id="prevMotif">-</span></div>
+          </div>
+          <img src="" id="prevLogo" class="logo-img" style="display:none;">
+        </div>
+        <div class="middle">
+          <div class="photo-area"><img src="" id="prevPhoto" style="display:none;"></div>
+          <div class="info-grid" id="infoGrid"></div>
+        </div>
+        <div class="oneline-bar" id="prevOneline">－</div>
+      </div>
+    </div>
+  </div>
 
     <div class="ad-section">
       <p class="ad-title">♡ 推し活におすすめグッズ ♡</p>
