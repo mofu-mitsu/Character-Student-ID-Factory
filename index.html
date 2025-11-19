@@ -41,51 +41,49 @@
   @media(max-width:900px){
     .main{
       grid-template-columns:1fr;
-      padding:15px 8px;
-      gap:25px;
+      padding:12px 8px;
+      gap:20px;
     }
   
-    /* ★★★ これが最強の横長リサイズ奥義 ★★★ */
     #card{
-      width:100% !important;                    /* 画面幅いっぱい */
-      max-width:100% !important;
-      height:auto !important;                   /* 高さは自動（アスペクト比キープ） */
-      min-height:auto !important;
-      padding:5% 6% 6% !important;              /* %で内側余白も比例縮小 */
-      box-sizing:border-box;
-      aspect-ratio: 640 / 400;                  /* ← これが超重要！！！PCと同じ16:10を強制キープ */
-      transform:none !important;
-    }
-  
-    /* 内部のグリッドも比例縮小で横長キープ */
-    .middle{
-      grid-template-columns:240px 1fr !important;   /* 左右並び強制 */
-      gap:30px;
-    }
-  
-    .photo-area{
-      width:240px !important;
-      height:220px !important;
-      aspect-ratio:240/220;
-    }
-  
-    .photo-area img{
       width:100% !important;
-      height:100% !important;
-      object-fit:cover;         /* トリミングOKならこれ */
-      /* object-fit:contain; */ /* 全体見せたいならこっち（黒枠出るかも） */
+      max-width:100% !important;
+      height:auto !important;
+      padding:4% 5% 5% !important;
+      box-sizing:border-box;
+      aspect-ratio:640/400;
+      border-radius:20px;
     }
   
-    /* 文字サイズは自動調整（vwで画面幅に比例） */
-    .name{font-size:8.5vw !important; max-font-size:34px;}
-    .school-title{font-size:6vw !important;}
-    .sub-right{font-size:3.8vw !important; padding-top:8vw;}
-    .logo-img{width:16vw;height:16vw;top:-4vw;right:-4vw;}
-    .info-grid{font-size:3.9vw !important;}
-    .oneline-bar{font-size:4.5vw !important; padding:4vw 5vw;}
-  }
+    /* 写真エリアをちゃんと縮小 */
+    .middle{
+      grid-template-columns:38% 1fr !important;
+      gap:4%;
+      margin-top:-2%;
+    }
+    .photo-area{
+      width:100% !important;
+      height:auto !important;
+      aspect-ratio:240/220;
+      border:8px solid var(--border) !important;
+      border-radius:16px;
+    }
+  
+    /* 文字サイズをemで安定させる（vwやめ！） */
+    .school-title{font-size:1.7em !important;}
+    .name{font-size:2.1em !important;line-height:1.2;}
+    .sub-right{font-size:0.92em !important;padding-top:4%;}
+    .logo-img{width:13%;height:13%;top:-3%;right:-3%;}
+    .info-grid{font-size:0.95em !important;}
+    .oneline-bar{
+      font-size:1.05em !important;
+      padding:3.5% 5% !important;
+      margin:4% 2% 2% !important;   /* ←これで広告と絶対くっつかない */
+      border-radius:16px;
+    }
       /* 楽天アフィを確実に小さくする最終兵器 */
       .ad-section{
+        margin-top:30px !important;
         padding:12px 5px !important;
         overflow:hidden;
       }
