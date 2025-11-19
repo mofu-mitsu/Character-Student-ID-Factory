@@ -8,20 +8,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
-      --grid: url('https://www.transparenttextures.com/patterns/graphy.png');
+      --main: #ff69b4;
+      --text: #6B4F3A;
       --bg: #fffaf0;
+      --grid: url('https://www.transparenttextures.com/patterns/graphy.png');
       --border: #d8c4a8;
       --photo-bg: #e6f2ff;
-      --text: #6B4F3A;
     }
     body {
       margin: 0; padding: 20px 0; min-height: 100vh;
       font-family: 'Kiwi Maru', sans-serif;
       background: linear-gradient(#fff0f8, #ffe4f0);
-    }
-    body::before {
-      content: ""; position: fixed; inset: 0;
-      background: var(--grid); opacity: 0.3; pointer-events: none;
     }
     .container { max-width: 1100px; margin: 0 auto; }
     .header {
@@ -29,7 +26,7 @@
       color: white; text-align: center; padding: 25px; font-size: 28px; font-weight: bold;
       border-radius: 20px 20px 0 0;
     }
-    .main { padding: 30px; display: grid; grid-template-columns: 1fr 580px; gap: 40px; }
+    .main { padding: 30px; display: grid; grid-template-columns: 1fr 620px; gap: 40px; }
     @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
 
     .form-area {
@@ -38,37 +35,68 @@
     label { display: block; margin: 15px 0 6px; font-weight: bold; color: #b36c84; }
     input, textarea, select { width: 100%; padding: 12px; border: 2px solid #ffd1dc; border-radius: 10px; box-sizing: border-box; }
     button {
-      background: #ff69b4; color: white; border: none; padding: 12px 20px; border-radius: 30px;
+      background: var(--main); color: white; border: none; padding: 12px 20px; border-radius: 30px;
       font-weight: bold; cursor: pointer; margin: 8px 4px 0 0;
     }
 
-    /* 横長カード（固定サイズ） */
+    /* 学生証カード本体 */
     #card {
-      width: 580px; height: 366px;   /* 86:54 比率 */
-      background: var(--bg); border-radius: 20px; padding: 24px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.2); position: relative;
-      color: var(--text); font-size: 15px; line-height: 1.6;
-      display: grid; grid-template-columns: 200px 1fr; gap: 24px;
+      width: 620px; height: 380px;
+      background: var(--bg) var(--grid) repeat;
+      background-size: 30px 30px;
+      opacity: 0.95;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.22);
+      position: relative;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.5;
       overflow: hidden;
     }
+    #card::before {
+      content: ""; position: absolute; inset: 0;
+      background: var(--bg); opacity: 0.92;
+    }
+    .content { position: relative; z-index: 1; height: 100%; display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; }
+
+    .top-bar {
+      display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 20px;
+    }
+    .school-title { font-size: 26px; font-weight: bold; text-align: left; }
+    .name-sex-motif { text-align: right; font-size: 18px; }
+    .name { font-size: 32px !important; font-weight: bold; display: block; }
+    .logo-img { width: 60px; height: 60px; object-fit: contain; }
+
+    .middle {
+      display: grid; grid-template-columns: 220px 1fr; gap: 24px;
+    }
     .photo-area {
-      width: 200px; height: 200px; background: var(--photo-bg);
-      border: 9px solid var(--border); border-radius: 16px; overflow: hidden;
+      width: 220px; height: 220px; background: var(--photo-bg);
+      border: 10px solid var(--border); border-radius: 18px; overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
     }
     .photo-area img { width: 100%; height: 100%; object-fit: cover; }
-    .logo-img { position: absolute; top: 16px; right: 20px; width: 56px; height: 56px; object-fit: contain; }
 
-    .right-area { display: flex; flex-direction: column; justify-content: space-between; }
-    .school-title { font-size: 24px; font-weight: bold; text-align: center; }
-    .name { font-size: 32px; font-weight: bold; }
-    .info-line { margin: 6px 0; white-space: nowrap; }
-    .extra-info { font-size: 14px; margin-top: 12px; }
-    .oneline {
-      margin-top: auto; padding: 14px; background: rgba(255,255,255,0.75);
-      border: 2px dashed #ffd1dc; border-radius: 12px; text-align: center; font-style: italic;
+    .info-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; align-content: start;
+      font-size: 15px;
     }
+    .info-item { white-space: nowrap; }
+
+    .oneline-bar {
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.8);
+      border: 3px dashed #ffd1dc;
+      border-radius: 16px;
+      text-align: center;
+      font-style: italic;
+      font-size: 17px;
+      margin-top: 12px;
+    }
+
     .footer { text-align: center; padding: 30px; background: #fff0f5; }
-    .footer a { color: #ff69b4; font-weight: bold; text-decoration: none; }
+    .footer a { color: var(--main); font-weight: bold; text-decoration: none; }
   </style>
 </head>
 <body>
@@ -81,7 +109,6 @@
       <label>学校名</label><input type="text" id="school" placeholder="例：とりの丘学園">
 
       <label>名前（ふりがなも可）</label><input type="text" id="name" placeholder="例：萩枝 美琳（はぎえだ みりん）">
-
       <label>名前の色</label>
       <select id="nameColor">
         <option value="#d14a8a">ピンク（女の子向け）</option>
@@ -89,21 +116,23 @@
         <option value="#8b4513">茶色（中性的）</option>
       </select>
 
+      <label>性別（任意）</label><input type="text" id="gender">
+      <label>モチーフ（任意）</label><input type="text" id="motif">
+
       <label>学年・クラス（任意）</label><input type="text" id="grade">
       <label>学籍番号／ID（任意）</label><input type="text" id="studentId">
-
-      <label>性別（任意）</label><input type="text" id="gender">
       <label>誕生日（任意）</label><input type="text" id="birthday">
       <label>血液型（任意）</label><input type="text" id="blood">
-      <label>MBTI（任意）</label><input type="text" id="mbti">
       <label>出身地（任意）</label><input type="text" id="from">
+      <label>MBTI（任意）</label><input type="text" id="mbti">
+      <label>容姿（任意）</label><input type="text" id="appearance" placeholder="例：黒髪ロング、猫耳など">
+      <label>その他（任意）</label><input type="text" id="other" placeholder="自由項目">
 
       <label>性格（任意）</label><input type="text" id="personality">
-      <label>モチーフ（任意）</label><input type="text" id="motif">
       <label>好きなもの（任意）</label><input type="text" id="like">
       <label>苦手なもの（任意）</label><input type="text" id="hate">
 
-      <label>ひとこと（任意）</label><textarea id="oneline" rows="2"></textarea>
+      <label>ひとこと（任意）</label><textarea id="oneline" rows="2" placeholder="えへへ♡かまってくれなきゃイタズラしちゃうぞ〜"></textarea>
 
       <label>顔写真アップロード</label><input type="file" id="photo" accept="image/*">
       <label>右上ロゴ画像（任意）</label><input type="file" id="logo" accept="image/*">
@@ -117,16 +146,25 @@
 
     <div style="display:flex;justify-content:center;">
       <div id="card">
-        <img src="" id="prevLogo" class="logo-img" style="display:none;">
-        <div class="photo-area"><img src="" id="prevPhoto" style="display:none;"></div>
-        <div class="right-area">
-          <div>
+        <div class="content">
+          <div class="top-bar">
             <div class="school-title" id="prevSchool">学生証</div>
-            <div class="name" id="prevName">-</div>
-            <div id="lines"></div>
-            <div class="extra-info" id="extra"></div>
+            <div class="name-sex-motif">
+              <div class="name" id="prevName">-</div>
+              <div id="prevGenderLine">性別：<span id="prevGender">-</span></div>
+              <div id="prevMotifLine">モチーフ：<span id="prevMotif">-</span></div>
+            </div>
+            <img src="" id="prevLogo" class="logo-img" style="display:none;">
           </div>
-          <div class="oneline" id="prevOneline">-</div>
+
+          <div class="middle">
+            <div class="photo-area"><img src="" id="prevPhoto" style="display:none;"></div>
+            <div class="info-grid" id="infoGrid">
+              <!-- JSで動的に追加 -->
+            </div>
+          </div>
+
+          <div class="oneline-bar" id="prevOneline">-</div>
         </div>
       </div>
     </div>
@@ -142,8 +180,9 @@
     if (!file) return;
     const reader = new FileReader();
     reader.onload = e => {
-      document.getElementById(target).src = e.target.result;
-      document.getElementById(target).style.display = 'block';
+      const img = document.getElementById(target);
+      img.src = e.target.result;
+      img.style.display = 'block';
     };
     reader.readAsDataURL(file);
   }
@@ -151,41 +190,58 @@
   document.getElementById('logo').addEventListener('change', e => preview(e.target.files[0], 'prevLogo'));
 
   function update() {
+    // 学校名
     const school = document.getElementById('school').value.trim();
     document.getElementById('prevSchool').textContent = school ? school + ' 学生証' : '学生証';
 
+    // 名前と色
     const name = document.getElementById('name').value.trim();
     const nameEl = document.getElementById('prevName');
     nameEl.textContent = name || '-';
     nameEl.style.color = document.getElementById('nameColor').value;
 
-    const lines = [];
-    const add = (label, id) => {
+    // 性別・モチーフ
+    const gender = document.getElementById('gender').value.trim();
+    document.getElementById('prevGenderLine').style.display = gender ? 'block' : 'none';
+    document.getElementById('prevGender').textContent = gender || '-';
+
+    const motif = document.getElementById('motif').value.trim();
+    document.getElementById('prevMotifLine').style.display = motif ? 'block' : 'none';
+    document.getElementById('prevMotif').textContent = motif || '-';
+
+    // 情報グリッド
+    const grid = document.getElementById('infoGrid');
+    grid.innerHTML = '';
+    const items = [
+      ['学年', 'grade'],
+      ['学籍番号', 'studentId'],
+      ['誕生日', 'birthday'],
+      ['血液型', 'blood'],
+      ['出身地', 'from'],
+      ['MBTI', 'mbti'],
+      ['容姿', 'appearance'],
+      ['その他', 'other'],
+      ['性格', 'personality'],
+      ['好き', 'like'],
+      ['苦手', 'hate']
+    ];
+    items.forEach(([label, id]) => {
       const val = document.getElementById(id).value.trim();
-      if (val) lines.push(`${label}：${val}`);
-    };
-    add('学年', 'grade');
-    add('学籍番号', 'studentId');
-    add('性別', 'gender');
-    add('誕生日', 'birthday');
-    add('血液型', 'blood');
-    add('MBTI', 'mbti');
-    add('出身地', 'from');
-    document.getElementById('lines').innerHTML = lines.map(l => `<div class="info-line">${l}</div>`).join('');
+      if (val) {
+        const div = document.createElement('div');
+        div.className = 'info-item';
+        div.innerHTML = `${label}：${val}`;
+        grid.appendChild(div);
+      }
+    });
 
-    const extra = [];
-    add('性格', 'personality');
-    add('モチーフ', 'motif');
-    add('好き', 'like');
-    add('苦手', 'hate');
-    document.getElementById('extra').innerHTML = extra.map(l => `<div>${l}</div>`).join('');
-
+    // ひとこと
     const one = document.getElementById('oneline').value.trim();
-    document.getElementById('prevOneline').textContent = one || '-';
+    document.getElementById('prevOneline').textContent = one || '－';
   }
 
   function save() {
-    html2canvas(document.getElementById('card'), { scale: 3, useCORS: true }).then(canvas => {
+    html2canvas(document.getElementById('card'), { scale: 3, useCORS: true, backgroundColor: null }).then(canvas => {
       const a = document.createElement('a');
       a.download = 'studentcard.png';
       a.href = canvas.toDataURL();
@@ -195,14 +251,13 @@
 
   function nativeShare() {
     if (navigator.share) {
-      save();
-      setTimeout(() => navigator.share({
-        title: 'キャラ学生証ファクトリー',
-        text: '作った学生証見て〜♡',
+      navigator.share({
+        title: 'キャラ学生証作ったよ♡',
+        text: '見てみて〜！',
         url: location.href
-      }), 500);
+      });
     } else {
-      alert('このブラウザは共有機能に対応してないよ〜');
+      alert('共有できない環境だよ〜');
     }
   }
 
