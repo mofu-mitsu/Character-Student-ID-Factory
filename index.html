@@ -39,94 +39,107 @@
     .header {background:linear-gradient(90deg,#ffb3d9,#ff69b4);color:white;text-align:center;padding:28px;font-size:30px;font-weight:bold;}
     .main {padding:35px;display:grid;grid-template-columns:1fr 640px;gap:50px;}
   
-    /* ★★★★★ スマホ専用レイアウト（完全レスポンシブ版） ★★★★★ */
-    @media (max-width: 900px) {
-    
-      body {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-      }
-    
-      /* カードを画面幅にフィットさせる（縮小は自動処理） */
-      #card-wrapper {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        padding: 20px 0;
-      }
-    
-      #card {
-        width: 94%;            /* 画面に合わせて縮む */
-        height: auto;          /* 高さは自動計算 */
-        aspect-ratio: 640 / 400; /* PC版と同じ比率を維持 */
-        padding: 18px;
-      }
-    
-      /* 上のグリッド：スマホは横が狭いので縦積みに */
-      .top-bar {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
-        margin-bottom: 10px;
-        text-align: center;
-      }
-    
-      .logo-img {
-        position: static;
-        width: 70px;
-        height: 70px;
-        margin-top: -4px;
-      }
-    
-      .sub-right {
-        padding-top: 0;
-        text-align: center;
-        font-size: 15px;
-        line-height: 1.4;
-      }
-    
-      .name-area .name {
-        font-size: 28px !important;
-      }
-    
-      /* 中央部分（写真 / 情報）の縦並び */
-      .middle {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 18px;
-        margin-top: 5px;
-      }
-    
-      .photo-area {
-        width: 70%;
-        height: auto;
-        aspect-ratio: 1 / 1;
-      }
-    
-      /* 情報欄 → 1列に */
-      .info-grid {
-        grid-template-columns: 1fr !important;
-        gap: 10px;
-        width: 100%;
-        font-size: 15px;
-      }
-    
-      /* ひとことバーのズレ防止 */
-      .oneline-bar {
-        margin-top: 15px;
-        width: 100%;
-        padding: 15px;
-        font-size: 16px;
-      }
-    
-      .ad-section {
-        margin-top: 40px !important;
-      }
+  /* ★★★★★ スマホ専用レイアウト（完全レスポンシブ版 ＆ 2列崩し保証） ★★★★★ */
+  @media (max-width: 900px) {
+  
+    /* 横幅制御の影響を最小限に */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      width: 100%;
     }
+  
+    /* 🔥 ここが最重要：スマホ時は main を “1列” にする！！ */
+    .main {
+      display: flex !important;     /* grid → flex に強制切替 */
+      flex-direction: column;       /* 縦並びにする */
+      gap: 30px;                    /* 隙間はほどよく */
+      padding: 20px;
+    }
+  
+    /* 入力フォームは幅100%に */
+    .form-area {
+      width: 100%;
+    }
+  
+    /* カードラッパ（中央寄せ & フル幅対応） */
+    #card-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+    }
+  
+    /* ★カードをスマホ幅に合わせて自動縮小★ */
+    #card {
+      width: 98%;              /* 画面にピッタリ */
+      height: auto;            /* 自動調整 */
+      aspect-ratio: 640 / 400; /* 元の比率を維持 */
+      padding: 18px;
+      transform: none !important; /* 過去のscaleを無効化 */
+    }
+  
+    /* 上のバーは縦に */
+    .top-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+    }
+  
+    .logo-img {
+      position: static;
+      width: 68px;
+      height: 68px;
+      margin-top: -6px;
+    }
+  
+    .sub-right {
+      padding-top: 0;
+      text-align: center;
+      font-size: 15px;
+    }
+  
+    .name-area .name {
+      font-size: 28px !important;
+    }
+  
+    /* 真ん中の写真＋情報は縦並び */
+    .middle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 5px;
+    }
+  
+    .photo-area {
+      width: 70%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+    }
+  
+    /* 情報欄も1列に強制 */
+    .info-grid {
+      grid-template-columns: 1fr !important;
+      width: 100%;
+      gap: 10px;
+    }
+  
+    /* ひとことバーのはみ出し対策 */
+    .oneline-bar {
+      width: 100%;
+      margin-top: 15px;
+      padding: 15px;
+      font-size: 16px;
+    }
+  
+    .ad-section {
+      margin-top: 40px !important;
+    }
+  }
     .form-area {background:#fffafa;padding:30px;border-radius:20px;border:3px dashed #ffd1dc;}
     label {display:block;margin:16px 0 6px;font-weight:bold;color:#b36c84;}
     input,textarea,select {width:100%;padding:12px;border:2px solid #ffd1dc;border-radius:10px;box-sizing:border-box;}
