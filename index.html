@@ -38,37 +38,95 @@
     .container {max-width:1100px;margin:0 auto;background:white;border-radius:24px;overflow:hidden;box-shadow:0 15px 40px rgba(255,105,180,0.25);}
     .header {background:linear-gradient(90deg,#ffb3d9,#ff69b4);color:white;text-align:center;padding:28px;font-size:30px;font-weight:bold;}
     .main {padding:35px;display:grid;grid-template-columns:1fr 640px;gap:50px;}
-
-    /* ★★★★★ スマホで全体を完璧に縮小する最終奥義 ★★★★★ */
-    @media (max-width:900px) {
-      /* ページ全体を0.88倍に縮小（入力もカードも全部！） */
+  
+    /* ★★★★★ スマホ専用レイアウト（完全レスポンシブ版） ★★★★★ */
+    @media (max-width: 900px) {
+    
       body {
-        transform: scale(0.88);
-        transform-origin: top center;
-        width: 113.6%; /* 縮小分の逆算で横幅を補正 */
+        width: 100%;
+        margin: 0;
+        padding: 0;
         overflow-x: hidden;
       }
-
-      /* さらにカードはPC版そのままの美しさで中央に */
+    
+      /* カードを画面幅にフィットさせる（縮小は自動処理） */
       #card-wrapper {
         width: 100%;
         display: flex;
         justify-content: center;
-        margin-top: 20px;
+        padding: 20px 0;
       }
-
+    
       #card {
-        width: 640px !important;
-        height: 400px !important;
-        border-radius: 26px;
-        box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+        width: 94%;            /* 画面に合わせて縮む */
+        height: auto;          /* 高さは自動計算 */
+        aspect-ratio: 640 / 400; /* PC版と同じ比率を維持 */
+        padding: 18px;
       }
-
+    
+      /* 上のグリッド：スマホは横が狭いので縦積みに */
+      .top-bar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+    
+      .logo-img {
+        position: static;
+        width: 70px;
+        height: 70px;
+        margin-top: -4px;
+      }
+    
+      .sub-right {
+        padding-top: 0;
+        text-align: center;
+        font-size: 15px;
+        line-height: 1.4;
+      }
+    
+      .name-area .name {
+        font-size: 28px !important;
+      }
+    
+      /* 中央部分（写真 / 情報）の縦並び */
+      .middle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        margin-top: 5px;
+      }
+    
+      .photo-area {
+        width: 70%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+      }
+    
+      /* 情報欄 → 1列に */
+      .info-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+        width: 100%;
+        font-size: 15px;
+      }
+    
+      /* ひとことバーのズレ防止 */
+      .oneline-bar {
+        margin-top: 15px;
+        width: 100%;
+        padding: 15px;
+        font-size: 16px;
+      }
+    
       .ad-section {
-        margin-top: 60px !important;
+        margin-top: 40px !important;
       }
     }
-
     .form-area {background:#fffafa;padding:30px;border-radius:20px;border:3px dashed #ffd1dc;}
     label {display:block;margin:16px 0 6px;font-weight:bold;color:#b36c84;}
     input,textarea,select {width:100%;padding:12px;border:2px solid #ffd1dc;border-radius:10px;box-sizing:border-box;}
