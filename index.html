@@ -61,22 +61,29 @@
     .school-title {font-size:26px;font-weight:bold;}
     .name-area {text-align:center;}
     .name {font-size:36px!important;font-weight:bold;display:block;}
-    .sub-right {text-align:right;font-size:16px;line-height:1.5;padding-top:60px;}
+    .sub-right {text-align:right;font-size:16px;line-height:1.5;padding-top:60px;font-weight:550;} /* 性別・モチーフも太く */
     .logo-img {position:absolute;top:-23px;right:-28px;width:80px;height:80px;object-fit:contain;z-index:10;}
-    .middle {display:grid;grid-template-columns:240px 1fr;gap:30px;flex:1;margin-top:-30px;} /* ←写真もっと上に！ */
+    .middle {display:grid;grid-template-columns:240px 1fr;gap:30px;flex:1;margin-top:-30px;}
     .photo-area {width:240px;height:220px;background:var(--photo-bg);border:11px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,0.16);}
     .photo-area img {width:100%;height:100%;object-fit:cover;}
 
-    /* 情報グリッド */
     .info-grid {
-      display:flex;flex-direction:column;gap:9px;margin-top:17px;
-      align-content:start; /* ←これで抜けた項目も上に詰まる！！ */
+      display:flex;flex-direction:column;
+      gap:8px; /* ←隙間狭くして上に詰まるように */
+      margin-top:25px; /* ←全体下げた！ */
+      align-content:start;
     }
     .info-row {
-      display:grid;grid-template-columns:1fr 1fr;gap:25px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:25px;
     }
-    .info-row > div:first-child {font-weight:500;}
-    .info-row > div:last-child {font-weight:600;} /* ←右列太くした！！ */
+    .info-row > div {
+      font-weight:550; /* ←左右両方しっかり太く！ */
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
 
     .oneline-bar {
       margin-top:auto;padding:18px 26px;
@@ -85,16 +92,22 @@
       font-size:18px;flex-shrink:0;
     }
 
-    /* スマホ用 */
     @media (max-width: 900px) {
       .main {grid-template-columns:1fr;padding:20px 15px;gap:30px;}
       .card-wrapper {width:100%;display:flex;justify-content:center;overflow:hidden;}
       #card {transform:scale(0.53);transform-origin:top center;margin-bottom:-170px;min-width:640px;}
-      .info-row {grid-template-columns:1fr !important;gap:6px;}
-      .info-row > div:last-child {margin-top:2px;font-weight:600;}
+      .info-row {
+        grid-template-columns:1fr !important;
+        gap:4px;
+      }
+      .info-row > div {
+        font-weight:550;
+      }
+      .info-row > div:last-child {
+        margin-top:3px;
+      }
     }
 
-    /* 超可愛い広告＆フッター復活！！ */
     .ad-section {
       text-align:center;padding:28px 20px;
       background:linear-gradient(135deg,#fff1f9,#ffe4f0);
@@ -106,8 +119,7 @@
       margin-bottom:18px;text-shadow:0 2px 4px rgba(255,105,180,0.3);
     }
     .footer {
-      text-align:center;padding:30px;background:#fff0f5;
-      font-size:20px;
+      text-align:center;padding:30px;background:#fff0f5;font-size:20px;
     }
     .footer a {
       color:#ff69b4 !important;font-weight:bold;text-decoration:none;
