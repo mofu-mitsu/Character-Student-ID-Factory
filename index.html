@@ -49,45 +49,46 @@
       width:100% !important;
       max-width:100% !important;
       height:auto !important;
-      padding:5% 6% 7% !important;   /* 下パディング増やしてバランス調整 */
+      padding:5% 6% !important;           /* 下パディング減らしてバランス戻す */
       box-sizing:border-box;
       aspect-ratio:640/400;
       border-radius:22px;
+      font-size:3.6vw !important;         /* ← これが最強の救世主！！！vwで文字サイズを画面幅比例に強制 */
     }
   
-    /* 写真をもっと上に寄せて可愛く */
+    /* 写真エリア完璧調整 */
     .middle{
       grid-template-columns:36% 1fr !important;
       gap:5%;
-      margin-top:-1.5% !important;   /* 写真を上に引き寄せる神調整 */
+      margin-top:-1.2% !important;
       align-items:start;
     }
     .photo-area{
       width:100% !important;
       height:auto !important;
       aspect-ratio:240/220;
-      border:9px solid var(--border) !important;
+      border:9px solid var(--border);
       border-radius:18px;
     }
   
-    /* 文字サイズを絶妙に調整（emで安定＋少し小さく） */
-    .school-title{font-size:1.55em !important;}
-    .name{font-size:1.95em !important;line-height:1.25;}
-    .sub-right{font-size:0.88em !important;padding-top:3%;}
+    /* emやめ！！！相対値で全部統一！！！ */
+    .school-title{font-size:1.6em !important;}
+    .name{font-size:2.1em !important;line-height:1.2;}
+    .sub-right{font-size:0.95em !important;padding-top:2.5%;}
     .logo-img{width:12%;height:12%;top:-3.5%;right:-3%;}
-    .info-grid{font-size:0.92em !important;line-height:1.5;}
-    
-    /* ひとことバーを上に引き上げて広告と離す！！ */
+    .info-grid{font-size:0.98em !important;line-height:1.45;}
+  
+    /* ひとことバー完璧位置！！！ */
     .oneline-bar{
-      font-size:1.0em !important;
-      padding:3% 6% !important;
-      margin:3% 0 8% 0 !important;   /* 下マージン増やして広告としっかり離れる */
+      font-size:1.05em !important;
+      padding:3.5% 6% !important;
+      margin:4% 0 4% 0 !important;      /* 下マージン減らして広告と自然に離れる */
       border-radius:16px;
     }
 
       /* 楽天アフィを確実に小さくする最終兵器 */
       .ad-section{
-        margin-top:45px !important;
+        margin-top:35px !important;
         padding:12px 5px !important;
         overflow:hidden;
       }
