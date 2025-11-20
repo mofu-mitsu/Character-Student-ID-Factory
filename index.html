@@ -279,13 +279,17 @@
     document.getElementById('prevOneline').textContent = document.getElementById('oneline').value.trim() || '－';
   }
 
-  // ふわふわ相性診断と同じ神保存方式！！！
+  // ←ここが超重要！背景色指定で方眼紙も完全に保存される！！
   function save(){
     const card = document.getElementById('card');
     const originalTransform = card.style.transform;
     card.style.transform = 'none';
 
-    html2canvas(card, {scale:3, useCORS:true, backgroundColor:null}).then(canvas=>{
+    html2canvas(card, {
+      scale:3,
+      useCORS:true,
+      backgroundColor:'#fffaf0'  // ←これで方眼紙も保存される！！
+    }).then(canvas=>{
       card.style.transform = originalTransform;
 
       if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
