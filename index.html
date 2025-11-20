@@ -286,9 +286,10 @@
     card.style.transform = 'none';
 
     html2canvas(card, {
-      scale:3,
-      useCORS:true,
-      backgroundColor:'#fffaf0'  // ←これで方眼紙も保存される！！
+      scale: 3,
+      useCORS: true,
+      allowTaint: true,    // ←念のためこれも追加！
+      backgroundColor: null // ←ここをnullにするのが重要！CSSの画像を優先させるよ！
     }).then(canvas=>{
       card.style.transform = originalTransform;
 
