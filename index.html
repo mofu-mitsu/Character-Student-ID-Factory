@@ -64,7 +64,24 @@
     .furigana {font-size:18px;margin-bottom:4px;font-weight:680;}
     .name {font-size:36px!important;font-weight:bold;display:block;}
     .sub-right {text-align:right;font-size:16px;line-height:1.5;padding-top:60px;font-weight:680;}
-    .logo-img {position:absolute;top:-23px;right:-28px;width:80px;height:80px;object-fit:contain;z-index:10;}
+    /* ロゴ専用のお部屋の設定 */
+    .logo-container {
+      position:absolute;
+      top:-23px;
+      right:-28px;
+      width:80px;   /* お部屋のサイズをしっかり指定！ */
+      height:80px;
+      z-index:10;
+      display: flex; /* 念のため、お部屋の中で真ん中に来るように */
+      justify-content: center;
+      align-items: center;
+    }
+    /* 画像はお部屋のサイズに合わせてピッタリ収まるように！ */
+    .logo-img {
+      width:100%;
+      height:100%;
+      object-fit:contain; /* これで縦横比を保ったまま綺麗に収まるよ♡ */
+    }
     .middle {display:grid;grid-template-columns:240px 1fr;gap:30px;flex:1;margin-top:-5px;}
     .photo-area {width:240px;height:220px;background:var(--photo-bg);border:11px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,0.16);}
     .photo-area img {width:100%;height:100%;object-fit:cover;}
@@ -213,7 +230,14 @@
   }
   // 画像選択時のイベントも復活！
   document.getElementById('photo').addEventListener('change', e => preview(e.target.files[0],'prevPhoto','photoInfo'));
-  document.getElementById('logo').addEventListener('change', e => preview(e.target.files[0],'prevLogo','logoInfo'));
+  document.getElementById('logo').addEventListener('change', e => {
+      const file = e.target.files[0];
+      if(file){
+        preview(file,'prevLogo','logoInfo');
+        // 画像ではなく、コンテナを表示させる！
+        document.getElementById('logoContainer').style.display = 'block';
+      }
+    });
 
   function update(){
     const nameColor = document.getElementById('nameColor').value;
