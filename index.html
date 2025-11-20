@@ -85,11 +85,13 @@
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    /* 「その他」だけは折り返して全部見えるように特別扱い♡ */
-    .info-row > div.other-item{
+    
+    /* 「その他」は常に左側に強制配置＋折り返しOK */
+    .info-row > div.other-full{
+      grid-column:1 / -1; /* 横2マス全部使う！ */
       white-space:normal !important;
       word-break:break-all;
-      overflow:visible;
+      text-overflow:clip;
     }
 
     .oneline-bar{
@@ -222,13 +224,19 @@
     document.getElementById(infoId).textContent = `♡ ${file.name} を選択しました ♡`;
   }
   document.getElementById('photo').addEventListener('change', e => preview(e.target.files[0],'prevPhoto','photoInfo'));
-  document.getElementById('logo').addEventListener('change', e => preview(e.target.files[0],'prevLogo','logoInfo'));
+document.getElementById('logo').addEventListener('change', e => {
+    if(!e.target.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = document.getElementById('prevLogo');
+      img.src = ev.target.result;
+      img.style.display = 'block';
+      img.loading = "eager"; // ←これで保存時に確実に読み込まれる！
+    };
+    reader.readAsDataURL(e.target.files[0]);
+    document.getElementById('logoInfo').textContent = `♡ ${e.target.files[0].name} を選択しました ♡`;
+  });
 
-  function update(){
-    const nameColor = document.getElementById('nameColor').value;
-    
-    document.getElementById('prevSchool').textContent = document.getElementById('school').value.trim() ? document.getElementById('school').value.trim() + ' 学生証' : '学生証';
-    
     const name = document.getElementById('name').value.trim() || '-';
     const furigana = document.getElementById('furigana').value.trim();
     document.getElementById('prevName').textContent = name;
@@ -262,14 +270,18 @@
       {id:'other', label:'その他'}
     ];
 
-    const activeItems = [];
     fieldDefs.forEach(def => {
       const val = document.getElementById(def.id).value.trim();
       if(val){
-        activeItems.push({ label: def.label, value: val });
+        if(def.label === 'その他'){
+          otherItem = {label: def.label, value: val};
+        }else{
+          activeItems.push({label: def.label, value: val});
+        }
       }
     });
 
+    // 通常項目を2列でペアリング
     for(let i = 0; i < activeItems.length; i += 2){
       const left = activeItems[i];
       const right = activeItems[i+1];
@@ -277,20 +289,21 @@
       const row = document.createElement('div');
       row.className = 'info-row';
       
-      let leftClass = '';
-      if(left.label === 'その他') leftClass = 'other-item';
-
-      let rightClass = '';
-      if(right && right.label === 'その他') rightClass = 'other-item';
-
-      let html = `<div class="${leftClass}">${left.label}：${left.value}</div>`;
+      let html = `<div>${left.label}：${left.value}</div>`;
       if(right){
-        html += `<div class="${rightClass}">${right.label}：${right.value}</div>`;
+        html += `<div>${right.label}：${right.value}</div>`;
       } else {
         html += `<div></div>`;
       }
-      
       row.innerHTML = html;
+      grid.appendChild(row);
+    }
+
+    // 「その他」があったら最後に横長で追加！
+    if(otherItem){
+      const row = document.createElement('div');
+      row.className = 'info-row';
+      row.innerHTML = `<div class="other-full">${otherItem.label}：${otherItem.value}</div>`;
       grid.appendChild(row);
     }
 
