@@ -224,19 +224,19 @@
     document.getElementById(infoId).textContent = `♡ ${file.name} を選択しました ♡`;
   }
   document.getElementById('photo').addEventListener('change', e => preview(e.target.files[0],'prevPhoto','photoInfo'));
-document.getElementById('logo').addEventListener('change', e => {
-    if(!e.target.files[0]) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      const img = document.getElementById('prevLogo');
-      img.src = ev.target.result;
-      img.style.display = 'block';
-      img.loading = "eager"; // ←これで保存時に確実に読み込まれる！
-    };
-    reader.readAsDataURL(e.target.files[0]);
-    document.getElementById('logoInfo').textContent = `♡ ${e.target.files[0].name} を選択しました ♡`;
-  });
-
+  document.getElementById('logo').addEventListener('change', e => {
+      if(!e.target.files[0]) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = document.getElementById('prevLogo');
+        img.src = ev.target.result;
+        img.style.display = 'block';
+        img.loading = "eager"; // ←これで保存時に確実に読み込まれる！
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      document.getElementById('logoInfo').textContent = `♡ ${e.target.files[0].name} を選択しました ♡`;
+    });
+  
     const name = document.getElementById('name').value.trim() || '-';
     const furigana = document.getElementById('furigana').value.trim();
     document.getElementById('prevName').textContent = name;
