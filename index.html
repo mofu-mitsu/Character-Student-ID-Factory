@@ -78,9 +78,18 @@
     .info-row {
       display:grid;grid-template-columns:1fr 1fr;gap:25px;
     }
-    .info-row > div {
+    /* ←ここが神修正！！ */
+    .info-row > div{
       font-weight:680;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    /* 「その他」だけは折り返して全部見えるように特別扱い♡ */
+    .info-row > div.other-item{
+      white-space:normal !important;
+      word-break:break-all;
+      overflow:visible;
     }
 
     .oneline-bar{
