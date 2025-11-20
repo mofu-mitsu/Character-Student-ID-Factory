@@ -149,8 +149,8 @@
       </select>
       <label>性別（任意）</label><input type="text" id="gender">
       <label>モチーフ（任意）</label><input type="text" id="motif">
-      <label>クラス（任意）</label><input type="text" id="grade">
-      <label>ID（任意）</label><input type="text" id="studentId">
+      <label>学年・クラス（任意）</label><input type="text" id="grade">
+      <label>学籍番号／ID（任意）</label><input type="text" id="studentId">
       <label>性格（任意）</label><input type="text" id="personality">
       <label>容姿（任意）</label><input type="text" id="appearance">
       <label>誕生日（任意）</label><input type="text" id="birthday">
@@ -249,8 +249,8 @@
     grid.innerHTML = '';
 
     const fieldDefs = [
-      {id:'grade', label:'学年・クラス'},
-      {id:'studentId', label:'学籍番号／ID'},
+      {id:'grade', label:'クラス'},
+      {id:'studentId', label:'ID'},
       {id:'personality', label:'性格'},
       {id:'appearance', label:'容姿'},
       {id:'birthday', label:'誕生日'},
@@ -277,9 +277,15 @@
       const row = document.createElement('div');
       row.className = 'info-row';
       
-      let html = `<div>${left.label}：${left.value}</div>`;
+      let leftClass = '';
+      if(left.label === 'その他') leftClass = 'other-item';
+
+      let rightClass = '';
+      if(right && right.label === 'その他') rightClass = 'other-item';
+
+      let html = `<div class="${leftClass}">${left.label}：${left.value}</div>`;
       if(right){
-        html += `<div>${right.label}：${right.value}</div>`;
+        html += `<div class="${rightClass}">${right.label}：${right.value}</div>`;
       } else {
         html += `<div></div>`;
       }
