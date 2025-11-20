@@ -24,7 +24,6 @@
     :root {
       --メイン: #ff69b4;
       --text: #6B4F3A;
-      /* ↓ ここに方眼紙の線の色を追加したよ！薄めの0.4にしてる♡ */
       --grid-line: rgba(216, 196, 168, 0.4);
       --border: #d8c4a8;
       --photo-bg: #e6f2ff;
@@ -48,14 +47,12 @@
 
     #card{
       width:640px;height:460px;
-      /* 背景色と方眼紙の模様を設定！ */
       background-color: #fffaf0;
       background-image:
         linear-gradient(var(--grid-line) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-      background-size: 15px 15px; /* チャッピー認定の最強サイズ♡ */
+      background-size: 15px 15px;
       background-position: center top;
-      
       border-radius:26px;padding:20px 28px 28px;
       box-shadow:0 18px 40px rgba(0,0,0,0.25);
       position:relative;color:var(--text);font-size:15.5px;line-height:1.6;
@@ -78,17 +75,14 @@
     .info-row {
       display:grid;grid-template-columns:1fr 1fr;gap:25px;
     }
-    /* ←ここが神修正！！ */
     .info-row > div{
       font-weight:680;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    
-    /* 「その他」は常に左側に強制配置＋折り返しOK */
     .info-row > div.other-full{
-      grid-column:1 / -1; /* 横2マス全部使う！ */
+      grid-column:1 / -1;
       white-space:normal !important;
       word-break:break-all;
       text-overflow:clip;
@@ -96,7 +90,7 @@
 
     .oneline-bar{
       margin-top:auto;
-      margin-bottom:-5px; /* PCでもスマホでも完璧に下固定！！ */
+      margin-bottom:-5px;
       padding:18px 26px;background:rgba(255,255,255,0.9);
       border:3px dashed var(--dash);border-radius:18px;
       text-align:center;font-style:italic;font-size:18px;flex-shrink:0;
@@ -107,7 +101,6 @@
       .card-wrapper {width:100%;display:flex;justify-content:center;overflow:hidden;}
       #card {transform:scale(0.53);transform-origin:top center;margin-bottom:-170px;min-width:640px;}
     }
-    /* スマホ長押し保存エリアを超かわいく！ */
     #longpressSaveArea{
       display:none;text-align:center;margin:40px auto;padding:20px;
       background:linear-gradient(135deg,#fff1f9,#ffe4f0);border-radius:24px;
@@ -118,13 +111,7 @@
       text-shadow:0 2px 4px rgba(255,105,180,0.3);
     }
     #longpressSaveArea img{
-      width: 100%;       /* 親要素（ピンクの枠）の幅いっぱいに合わせる！ */
-      height: auto;      /* 幅に合わせて高さは自動調整！ */
-      max-width: 640px;  /* PCで見たときも巨大になりすぎないように制限 */
-      object-fit: contain;
-      background: white;
-      border-radius: 20px; /* 少し丸みを調整 */
-      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      width: 100%; height: auto; max-width: 640px; object-fit: contain; background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     }
     .ad-section {text-align:center;padding:28px 20px;background:linear-gradient(135deg,#fff1f9,#ffe4f0);border-top:4px dashed #ff69b4;margin-top:30px;border-radius:0 0 24px 24px;}
     .ad-title {font-size:22px;font-weight:bold;color:#ff69b4;margin-bottom:18px;text-shadow:0 2px 4px rgba(255,105,180,0.3);}
@@ -159,8 +146,8 @@
       <label>血液型（任意）</label><input type="text" id="blood">
       <label>出身地（任意）</label><input type="text" id="from">
       <label>MBTI（任意）</label><input type="text" id="mbti">
-      <label>好き（任意）</label><input type="text" id="like">
-      <label>苦手（任意）</label><input type="text" id="hate">
+      <label>好きなもの（任意）</label><input type="text" id="like">
+      <label>苦手なもの（任意）</label><input type="text" id="hate">
       <label>その他（任意）</label><input type="text" id="other">
       <label>ひとこと（任意）</label><textarea id="oneline" rows="3" placeholder="えへへ♡かまってくれなきゃイタズラしちゃうぞ〜"></textarea>
       <label>顔写真アップロード</label>
@@ -212,6 +199,22 @@
   </div>
 </div>
 
+<script>
+  // プレビュー関数も消えてたから復活させたよ！
+  function preview(file,target,infoId){
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById(target).src = e.target.result;
+      document.getElementById(target).style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+    document.getElementById(infoId).textContent = `♡ ${file.name} を選択しました ♡`;
+  }
+  // 画像選択時のイベントも復活！
+  document.getElementById('photo').addEventListener('change', e => preview(e.target.files[0],'prevPhoto','photoInfo'));
+  document.getElementById('logo').addEventListener('change', e => preview(e.target.files[0],'prevLogo','logoInfo'));
+
   function update(){
     const nameColor = document.getElementById('nameColor').value;
 
@@ -245,8 +248,8 @@
       {id:'blood', label:'血液型'},
       {id:'from', label:'出身地'},
       {id:'mbti', label:'MBTI'},
-      {id:'like', label:'好き'},
-      {id:'hate', label:'苦手'},
+      {id:'like', label:'好きなもの'}, /* IDに合わせて修正したよ */
+      {id:'hate', label:'苦手なもの'}, /* IDに合わせて修正したよ */
       {id:'other', label:'その他'}
     ];
 
@@ -299,7 +302,7 @@
     html2canvas(card, {
       scale:3,
       useCORS:true,
-      backgroundColor: null // ここをnullにしておけばCSSで描いた方眼紙が綺麗に保存されるよ！
+      backgroundColor: null // CSSの方眼紙を生かす設定！
     }).then(canvas=>{
       card.style.transform = originalTransform;
 
