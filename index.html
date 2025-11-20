@@ -92,7 +92,20 @@
       #card {transform:scale(0.53);transform-origin:top center;margin-bottom:-170px;min-width:640px;}
       /* ←ここを削除したからスマホでも2列になる！！ */
     }
-
+    /* スマホ長押し保存エリアを超かわいく！ */
+    #longpressSaveArea{
+      display:none;text-align:center;margin:40px auto;padding:20px;
+      background:linear-gradient(135deg,#fff1f9,#ffe4f0);border-radius:24px;
+      border:4px dashed #ff69b4;max-width:90%;box-shadow:0 10px 30px rgba(255,105,180,0.2);
+    }
+    #longpressSaveArea p{
+      font-size:22px;color:var(--main);font-weight:bold;margin:0 0 15px;
+      text-shadow:0 2px 4px rgba(255,105,180,0.3);
+    }
+    #longpressSaveArea img{
+      width:640px;height:460px;object-fit:contain;background:white;
+      border-radius:26px;box-shadow:0 15px 35px rgba(0,0,0,0.2);
+    }
     .ad-section {text-align:center;padding:28px 20px;background:linear-gradient(135deg,#fff1f9,#ffe4f0);border-top:4px dashed #ff69b4;margin-top:30px;border-radius:0 0 24px 24px;}
     .ad-title {font-size:22px;font-weight:bold;color:#ff69b4;margin-bottom:18px;text-shadow:0 2px 4px rgba(255,105,180,0.3);}
     .footer {text-align:center;padding:30px;background:#fff0f5;font-size:20px;}
@@ -265,26 +278,24 @@
   function save(){
     const card = document.getElementById('card');
     const originalTransform = card.style.transform;
-    card.style.transform = 'none'; // scale解除
+    card.style.transform = 'none';
 
     html2canvas(card, {scale:3, useCORS:true, backgroundColor:null}).then(canvas=>{
       card.style.transform = originalTransform;
 
       if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // PC → 自動ダウンロード
         const a = document.createElement('a');
         a.download = 'studentcard.png';
         a.href = canvas.toDataURL('image/png');
         a.click();
       } else {
-        // スマホ → 長押し保存
         const area = document.getElementById('longpressSaveArea');
         area.style.display = 'block';
         area.innerHTML = '<p>画像を長押しして保存してね♡</p>';
         const img = new Image();
         img.src = canvas.toDataURL('image/png');
         area.appendChild(img);
-        alert('画像を長押しして保存してね！');
+        alert('画像を長押しして保存してね♡');
       }
     });
   }
