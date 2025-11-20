@@ -64,7 +64,28 @@
     .furigana {font-size:18px;margin-bottom:4px;font-weight:680;}
     .name {font-size:36px!important;font-weight:bold;display:block;}
     .sub-right {text-align:right;font-size:16px;line-height:1.5;padding-top:60px;font-weight:680;}
-    .logo-img {position:absolute;top:-23px;right:-28px;width:80px;height:80px;object-fit:contain;z-index:10;}
+    
+    /* ▼▼▼ 修正ここから ▼▼▼ */
+    /* ロゴ専用のお部屋 */
+    .logo-container {
+      position:absolute;
+      top:-23px;
+      right:-28px;
+      width:80px;   /* お部屋のサイズをしっかり指定 */
+      height:80px;
+      z-index:10;
+      display: flex; /* ど真ん中に配置 */
+      justify-content: center;
+      align-items: center;
+    }
+    /* 画像はお部屋に合わせてフィット！ */
+    .logo-img {
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+    /* ▲▲▲ 修正ここまで ▲▲▲ */
+
     .middle {display:grid;grid-template-columns:240px 1fr;gap:30px;flex:1;margin-top:-5px;}
     .photo-area {width:240px;height:220px;background:var(--photo-bg);border:11px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,0.16);}
     .photo-area img {width:100%;height:100%;object-fit:cover;}
@@ -175,8 +196,11 @@
             <div id="prevGenderLine">性別：<span id="prevGender">-</span></div>
             <div id="prevMotifLine">モチーフ：<span id="prevMotif">-</span></div>
           </div>
-          <img src="" id="prevLogo" class="logo-img" style="display:none;">
-        </div>
+          
+          <div class="logo-container" id="logoContainer" style="display:none;">
+            <img src="" id="prevLogo" class="logo-img">
+          </div>
+          </div>
         <div class="middle">
           <div class="photo-area"><img src="" id="prevPhoto" style="display:none;"></div>
           <div class="info-grid" id="infoGrid"></div>
@@ -200,20 +224,33 @@
 </div>
 
 <script>
-  // プレビュー関数も消えてたから復活させたよ！
   function preview(file,target,infoId){
     if(!file) return;
     const reader = new FileReader();
     reader.onload = e => {
       document.getElementById(target).src = e.target.result;
-      document.getElementById(target).style.display = 'block';
+      // 顔写真の場合はここで表示させる（ロゴは別の場所で制御）
+      if(target === 'prevPhoto'){
+         document.getElementById(target).style.display = 'block';
+      }
     };
     reader.readAsDataURL(file);
     document.getElementById(infoId).textContent = `♡ ${file.name} を選択しました ♡`;
   }
-  // 画像選択時のイベントも復活！
+  
+  // 顔写真のイベントハンドラ
   document.getElementById('photo').addEventListener('change', e => preview(e.target.files[0],'prevPhoto','photoInfo'));
-  document.getElementById('logo').addEventListener('change', e => preview(e.target.files[0],'prevLogo','logoInfo'));
+  
+  // ▼▼▼ 修正ここから（ロゴのイベントハンドラを変更！） ▼▼▼
+  document.getElementById('logo').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if(file){
+      preview(file,'prevLogo','logoInfo');
+      // 画像ではなく、コンテナを表示させる！
+      document.getElementById('logoContainer').style.display = 'block';
+    }
+  });
+  // ▲▲▲ 修正ここまで ▲▲▲
 
   function update(){
     const nameColor = document.getElementById('nameColor').value;
@@ -248,8 +285,8 @@
       {id:'blood', label:'血液型'},
       {id:'from', label:'出身地'},
       {id:'mbti', label:'MBTI'},
-      {id:'like', label:'好きなもの'}, /* IDに合わせて修正したよ */
-      {id:'hate', label:'苦手なもの'}, /* IDに合わせて修正したよ */
+      {id:'like', label:'好きなもの'},
+      {id:'hate', label:'苦手なもの'},
       {id:'other', label:'その他'}
     ];
 
@@ -267,7 +304,6 @@
       }
     });
 
-    // 通常項目（2列）
     for(let i = 0; i < activeItems.length; i += 2){
       const left = activeItems[i];
       const right = activeItems[i+1];
@@ -283,7 +319,6 @@
       grid.appendChild(row);
     }
 
-    // その他は最後に横長で追加
     if(otherItem){
       const row = document.createElement('div');
       row.className = 'info-row';
@@ -302,37 +337,9 @@
     html2canvas(card, {
       scale:3,
       useCORS:true,
-      backgroundColor: null // CSSの方眼紙を生かす設定！
+      backgroundColor: null
     }).then(canvas=>{
       card.style.transform = originalTransform;
 
       if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        const a = document.createElement('a');
-        a.download = 'studentcard.png';
-        a.href = canvas.toDataURL('image/png');
-        a.click();
-      } else {
-        const area = document.getElementById('longpressSaveArea');
-        area.style.display = 'block';
-        area.innerHTML = '<p>画像を長押しして保存してね♡</p>';
-        const img = new Image();
-        img.src = canvas.toDataURL('image/png');
-        area.appendChild(img);
-        alert('画像を長押しして保存してね♡');
-      }
-    });
-  }
-
-  function nativeShare(){
-    if(navigator.share){
-      navigator.share({title:'キャラ学生証作ったよ♡',url:location.href});
-    }else{
-      alert('共有できないよ〜');
-    }
-  }
-
-  window.addEventListener('resize', update);
-  update();
-</script>
-</body>
-</html>
+        const
