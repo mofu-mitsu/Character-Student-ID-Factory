@@ -261,11 +261,18 @@
   }
 
   function save(){
-    html2canvas(document.getElementById('card'),{scale:3,useCORS:true}).then(c=>{
-      const a=document.createElement('a');
-      a.download='studentcard.png';
-      a.href=c.toDataURL();
+    const card = document.getElementById('card');
+    const originalTransform = card.style.transform;
+    card.style.transform = 'none';  // 一時的にscale解除
+    html2canvas(card, {scale:3, useCORS:true, backgroundColor:null}).then(canvas=>{
+      card.style.transform = originalTransform;  // 元に戻す
+      const a = document.createElement('a');
+      a.download = 'studentcard.png';
+      a.href = canvas.toDataURL();
       a.click();
+    }).catch(err=>{
+      card.style.transform = originalTransform;
+      alert('保存にちょっと失敗したかも…もう一回押してみてね！');
     });
   }
 
