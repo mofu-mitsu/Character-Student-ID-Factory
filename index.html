@@ -212,31 +212,11 @@
   </div>
 </div>
 
-<script>
-  function preview(file,target,infoId){
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      document.getElementById(target).src = e.target.result;
-      document.getElementById(target).style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-    document.getElementById(infoId).textContent = `♡ ${file.name} を選択しました ♡`;
-  }
-  document.getElementById('photo').addEventListener('change', e => preview(e.target.files[0],'prevPhoto','photoInfo'));
-  document.getElementById('logo').addEventListener('change', e => {
-      if(!e.target.files[0]) return;
-      const reader = new FileReader();
-      reader.onload = ev => {
-        const img = document.getElementById('prevLogo');
-        img.src = ev.target.result;
-        img.style.display = 'block';
-        img.loading = "eager"; // ←これで保存時に確実に読み込まれる！
-      };
-      reader.readAsDataURL(e.target.files[0]);
-      document.getElementById('logoInfo').textContent = `♡ ${e.target.files[0].name} を選択しました ♡`;
-    });
-  
+  function update(){
+    const nameColor = document.getElementById('nameColor').value;
+
+    document.getElementById('prevSchool').textContent = document.getElementById('school').value.trim() ? document.getElementById('school').value.trim() + ' 学生証' : '学生証';
+
     const name = document.getElementById('name').value.trim() || '-';
     const furigana = document.getElementById('furigana').value.trim();
     document.getElementById('prevName').textContent = name;
@@ -257,8 +237,8 @@
     grid.innerHTML = '';
 
     const fieldDefs = [
-      {id:'grade', label:'クラス'},
-      {id:'studentId', label:'ID'},
+      {id:'grade', label:'学年・クラス'},
+      {id:'studentId', label:'学籍番号／ID'},
       {id:'personality', label:'性格'},
       {id:'appearance', label:'容姿'},
       {id:'birthday', label:'誕生日'},
@@ -269,6 +249,9 @@
       {id:'hate', label:'苦手'},
       {id:'other', label:'その他'}
     ];
+
+    const activeItems = [];
+    let otherItem = null;
 
     fieldDefs.forEach(def => {
       const val = document.getElementById(def.id).value.trim();
@@ -281,25 +264,23 @@
       }
     });
 
-    // 通常項目を2列でペアリング
+    // 通常項目（2列）
     for(let i = 0; i < activeItems.length; i += 2){
       const left = activeItems[i];
       const right = activeItems[i+1];
-
       const row = document.createElement('div');
       row.className = 'info-row';
-      
       let html = `<div>${left.label}：${left.value}</div>`;
       if(right){
         html += `<div>${right.label}：${right.value}</div>`;
-      } else {
+      }else{
         html += `<div></div>`;
       }
       row.innerHTML = html;
       grid.appendChild(row);
     }
 
-    // 「その他」があったら最後に横長で追加！
+    // その他は最後に横長で追加
     if(otherItem){
       const row = document.createElement('div');
       row.className = 'info-row';
