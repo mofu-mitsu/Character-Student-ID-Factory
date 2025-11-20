@@ -80,7 +80,7 @@
     }
 
     .oneline-bar {
-      margin-top:auto;margin-bottom:22px;padding:18px 26px;
+      margin-top:auto;margin-bottom:28px;padding:18px 26px;
       background:rgba(255,255,255,0.9);border:3px dashed var(--dash);
       border-radius:18px;text-align:center;font-style:italic;
       font-size:18px;flex-shrink:0;
@@ -173,7 +173,8 @@
       <script src="https://xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js"></script>
     </div>
   </div>
-
+  <!-- スマホ用長押し保存エリア -->
+  <div id="longpressSaveArea"></div>
   <div class="footer">
     <p><a href="https://mofu-mitsu.github.io/">← もふみつ工房 TOPに戻る ♡</a></p>
   </div>
@@ -260,19 +261,31 @@
     document.getElementById('prevOneline').textContent = document.getElementById('oneline').value.trim() || '－';
   }
 
+  // ふわふわ相性診断と同じ神保存方式！！！
   function save(){
     const card = document.getElementById('card');
     const originalTransform = card.style.transform;
-    card.style.transform = 'none';  // 一時的にscale解除
+    card.style.transform = 'none'; // scale解除
+
     html2canvas(card, {scale:3, useCORS:true, backgroundColor:null}).then(canvas=>{
-      card.style.transform = originalTransform;  // 元に戻す
-      const a = document.createElement('a');
-      a.download = 'studentcard.png';
-      a.href = canvas.toDataURL();
-      a.click();
-    }).catch(err=>{
       card.style.transform = originalTransform;
-      alert('保存にちょっと失敗したかも…もう一回押してみてね！');
+
+      if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // PC → 自動ダウンロード
+        const a = document.createElement('a');
+        a.download = 'studentcard.png';
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+      } else {
+        // スマホ → 長押し保存
+        const area = document.getElementById('longpressSaveArea');
+        area.style.display = 'block';
+        area.innerHTML = '<p>画像を長押しして保存してね♡</p>';
+        const img = new Image();
+        img.src = canvas.toDataURL('image/png');
+        area.appendChild(img);
+        alert('画像を長押しして保存してね！');
+      }
     });
   }
 
