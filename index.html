@@ -26,7 +26,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
-      --main: #ff69b4;
+      --メイン: #ff69b4;
       --text: #6B4F3A;
       --grid: url('https://www.transparenttextures.com/patterns/graphy.png');
       --border: #d8c4a8;
@@ -44,13 +44,13 @@
     label {display:block;margin:16px 0 6px;font-weight:bold;color:#b36c84;}
     input,textarea,select {width:100%;padding:12px;border:2px solid #ffd1dc;border-radius:10px;}
     input[type="file"]{display:none;}
-    .file-btn {display:inline-block;background:var(--main);color:white;padding:13px 30px;border-radius:30px;cursor:pointer;font-weight:bold;box-shadow:0 5px 12px rgba(255,105,180,0.35);}
+    .file-btn {display:inline-block;background:var(--メイン);color:white;padding:13px 30px;border-radius:30px;cursor:pointer;font-weight:bold;box-shadow:0 5px 12px rgba(255,105,180,0.35);}
     .file-btn:hover{transform:translateY(-3px);}
     .file-info {margin-top:8px;color:#b36c84;font-size:14px;}
-    button {background:var(--main);color:white;border:none;padding:13px 22px;border-radius:30px;font-weight:bold;cursor:pointer;margin:10px 6px 0 0;}
+    button {background:var(--メイン);color:white;border:none;padding:13px 22px;border-radius:30px;font-weight:bold;cursor:pointer;margin:10px 6px 0 0;}
 
     #card {
-      width:640px;height:440px; /* ひとことバー下げた分高くした */
+      width:640px;height:440px;
       background:#fffaf0 var(--grid) repeat;background-size:30px 30px;
       border-radius:26px;padding:20px 28px 28px;
       box-shadow:0 18px 40px rgba(0,0,0,0.25);
@@ -60,52 +60,37 @@
     .top-bar {display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:20px;position:relative;}
     .school-title {font-size:26px;font-weight:bold;}
     .name-area {text-align:center;line-height:1.3;}
-    .furigana {font-size:18px;margin-bottom:4px;font-weight:650;}
+    .furigana {font-size:18px;margin-bottom:4px;font-weight:680;}
     .name {font-size:36px!important;font-weight:bold;display:block;}
-    .sub-right {text-align:right;font-size:16px;line-height:1.5;padding-top:60px;font-weight:650;}
+    .sub-right {text-align:right;font-size:16px;line-height:1.5;padding-top:60px;font-weight:680;}
     .logo-img {position:absolute;top:-23px;right:-28px;width:80px;height:80px;object-fit:contain;z-index:10;}
     .middle {display:grid;grid-template-columns:240px 1fr;gap:30px;flex:1;margin-top:-30px;}
     .photo-area {width:240px;height:220px;background:var(--photo-bg);border:11px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,0.16);}
     .photo-area img {width:100%;height:100%;object-fit:cover;}
 
     .info-grid {
-      display:flex;flex-direction:column;
-      gap:6px;
-      margin-top:38px;
-      justify-content:flex-start;
-      align-content:flex-start;
+      display:flex;flex-direction:column;gap:7px;margin-top:38px;
     }
     .info-row {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:25px;
+      display:grid;grid-template-columns:1fr 1fr;gap:25px;
     }
     .info-row > div {
-      font-weight:650; /* 項目名も値も全部太く！ */
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      font-weight:680;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
 
     .oneline-bar {
-      margin-top:auto;
-      margin-bottom:10px; /* ←ここでさらに下げた！ */
-      padding:18px 26px;
-      background:rgba(255,255,255,0.9);
-      border:3px dashed var(--dash);
-      border-radius:18px;
-      text-align:center;
-      font-style:italic;
-      font-size:18px;
-      flex-shrink:0;
+      margin-top:auto;margin-bottom:15px;padding:18px 26px;
+      background:rgba(255,255,255,0.9);border:3px dashed var(--dash);
+      border-radius:18px;text-align:center;font-style:italic;
+      font-size:18px;flex-shrink:0;
     }
 
     @media (max-width: 900px) {
       .main {grid-template-columns:1fr;padding:20px 15px;gap:30px;}
       .card-wrapper {width:100%;display:flex;justify-content:center;overflow:hidden;}
       #card {transform:scale(0.53);transform-origin:top center;margin-bottom:-170px;min-width:640px;}
-      .info-row {grid-template-columns:1fr !important;gap:8px;}
-      .info-row > div {font-weight:650;}
+      /* ←ここを削除したからスマホでも2列になる！！ */
     }
 
     .ad-section {text-align:center;padding:28px 20px;background:linear-gradient(135deg,#fff1f9,#ffe4f0);border-top:4px dashed #ff69b4;margin-top:30px;border-radius:0 0 24px 24px;}
@@ -218,7 +203,7 @@
     document.getElementById('prevName').textContent = name;
     document.getElementById('prevName').style.color = nameColor;
     document.getElementById('prevFurigana').textContent = furigana;
-    document.getElementById('prevFurigana').style.color = nameColor;  // ←ふりがなも同じ色！
+    document.getElementById('prevFurigana').style.color = nameColor;
     document.getElementById('prevFurigana').style.display = furigana ? 'block' : 'none';
 
     const gender = document.getElementById('gender').value.trim();
@@ -232,37 +217,45 @@
     const grid = document.getElementById('infoGrid');
     grid.innerHTML = '';
 
-    const isMobile = window.innerWidth <= 900;
-
-    const pairs = [
-      ['grade','studentId','学年・クラス','学籍番号／ID'],
-      ['personality','appearance','性格','容姿'],
-      ['birthday','blood','誕生日','血液型'],
-      ['from','mbti','出身地','MBTI'],
-      ['like','hate','好きなもの','苦手なもの'],
-      ['other',null,'その他','']
+    const fieldDefs = [
+      {id:'grade', label:'学年・クラス'},
+      {id:'studentId', label:'学籍番号／ID'},
+      {id:'personality', label:'性格'},
+      {id:'appearance', label:'容姿'},
+      {id:'birthday', label:'誕生日'},
+      {id:'blood', label:'血液型'},
+      {id:'from', label:'出身地'},
+      {id:'mbti', label:'MBTI'},
+      {id:'like', label:'好きなもの'},
+      {id:'hate', label:'苦手なもの'},
+      {id:'other', label:'その他'}
     ];
 
-    pairs.forEach(p => {
-      const leftVal  = document.getElementById(p[0]).value.trim();
-      const rightVal = p[1] ? document.getElementById(p[1]).value.trim() : '';
-      if(leftVal || rightVal){
-        const row = document.createElement('div');
-        row.className = 'info-row';
-        if(isMobile){
-          row.innerHTML = `
-            ${leftVal ? `<div>${p[2]}：${leftVal}</div>` : ''}
-            ${rightVal ? `<div>${p[3]}：${rightVal}</div>` : ''}
-          `;
-        } else {
-          row.innerHTML = `
-            <div>${leftVal ? p[2]+'：'+leftVal : ''}</div>
-            <div>${rightVal ? p[3]+'：'+rightVal : ''}</div>
-          `;
-        }
-        grid.appendChild(row);
+    const activeItems = [];
+    fieldDefs.forEach(def => {
+      const val = document.getElementById(def.id).value.trim();
+      if(val){
+        activeItems.push({ label: def.label, value: val });
       }
     });
+
+    for(let i = 0; i < activeItems.length; i += 2){
+      const left = activeItems[i];
+      const right = activeItems[i+1];
+
+      const row = document.createElement('div');
+      row.className = 'info-row';
+      
+      let html = `<div>${left.label}：${left.value}</div>`;
+      if(right){
+        html += `<div>${right.label}：${right.value}</div>`;
+      } else {
+        html += `<div></div>`;
+      }
+      
+      row.innerHTML = html;
+      grid.appendChild(row);
+    }
 
     document.getElementById('prevOneline').textContent = document.getElementById('oneline').value.trim() || '－';
   }
