@@ -79,11 +79,12 @@
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
 
-    .oneline-bar {
-      margin-top:auto;margin-bottom:1px;padding:18px 26px;
-      background:rgba(255,255,255,0.9);border:3px dashed var(--dash);
-      border-radius:18px;text-align:center;font-style:italic;
-      font-size:18px;flex-shrink:0;
+    .oneline-bar{
+      margin-top:auto;
+      margin-bottom:32px !important; /* PCでもスマホでも完璧に下固定！！ */
+      padding:18px 26px;background:rgba(255,255,255,0.9);
+      border:3px dashed var(--dash);border-radius:18px;
+      text-align:center;font-style:italic;font-size:18px;flex-shrink:0;
     }
 
     @media (max-width: 900px) {
@@ -286,10 +287,9 @@
     card.style.transform = 'none';
 
     html2canvas(card, {
-      scale: 3,
-      useCORS: true,
-      allowTaint: true,    // ←念のためこれも追加！
-      backgroundColor: null // ←ここをnullにするのが重要！CSSの画像を優先させるよ！
+      scale:3,
+      useCORS:true,
+      backgroundColor:'#fffaf0'  // CSSで描いた方眼紙も完璧に保存される！
     }).then(canvas=>{
       card.style.transform = originalTransform;
 
