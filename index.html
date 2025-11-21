@@ -69,17 +69,8 @@
       text-overflow:ellipsis;
     }
     .sub-right {text-align:right;font-size:16px;line-height:1.5;padding-top:60px;font-weight:680;}
-    .logo-wrapper{
-      position:absolute;top:-23px;right:-28px;
-      width:80px;height:80px;
-      background:white;border-radius:12px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.2);
-      overflow:hidden;z-index:10;
-    }
-    .logo-wrapper img{
-      width:100%;height:100%;object-fit:contain;display:block;
-    }
-    .middle {display:grid;grid-template-columns:240px 1fr;gap:30px;flex:1;margin-top:15px;}
+    .logo-img {position:absolute;top:-23px;right:-28px;width:80px;height:80px;object-fit:contain;z-index:10;}
+    .middle {display:grid;grid-template-columns:240px 1fr;gap:30px;flex:1;margin-top:5px;}
     .photo-area {width:240px;height:220px;background:var(--photo-bg);border:11px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,0.16);}
     .photo-area img {width:100%;height:100%;object-fit:cover;}
 
@@ -188,10 +179,8 @@
           <div class="sub-right">
             <div id="prevGenderLine">性別：<span id="prevGender">-</span></div>
             <div id="prevMotifLine">モチーフ：<span id="prevMotif">-</span></div>
-          <!-- wrapperで囲んだ！！これが最強 -->
-          <div class="logo-wrapper" id="logoWrapper" style="display:none;">
-            <img src="" id="prevLogo">
           </div>
+          <img src="" id="prevLogo" class="logo-img" style="display:none;">
         </div>
         <div class="middle">
           <div class="photo-area"><img src="" id="prevPhoto" style="display:none;"></div>
