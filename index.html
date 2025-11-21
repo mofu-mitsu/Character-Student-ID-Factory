@@ -214,10 +214,13 @@
       img.style.display = 'block';
       // ← 保存時に変形しないように強制サイズ指定！
       if(target === 'prevLogo'){
-        img.style.width = '80px';
-        img.style.height = '80px';
-        img.width = 80;
-        img.height = 80;
+        // ← ここが神技！！ background-imageで描画 → html2canvasが絶対に伸ばせない！
+        el.style.backgroundImage = `url(${e.target.result})`;
+        el.style.display = 'block';
+      } else {
+        // 顔写真は普通にsrc
+        el.src = e.target.result;
+        el.style.display = 'block';
       }
     };
     reader.readAsDataURL(file);
