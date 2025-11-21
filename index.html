@@ -70,19 +70,23 @@
     }
     .sub-right {text-align:right;font-size:16px;line-height:1.5;padding-top:60px;font-weight:680;}
     /* ← 最終兵器！！！透過対応＋縦横比完全固定＋html2canvas完全対応 */
-    .logo-img {
+    .logo-container {
       position: absolute;
       top: -23px;
       right: -28px;
       width: 80px;
       height: 80px;
-      background: transparent !important;   /* ← 透過対応 */
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
+      background: transparent;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      overflow: hidden;
       z-index: 10;
+    }
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;   /* ← これで縦横比完全保持！ */
+      background: transparent;
       display: none;
     }
     .middle {display:grid;grid-template-columns:240px 1fr;gap:30px;flex:1;margin-top:15px;}
@@ -324,24 +328,16 @@
     document.getElementById('prevOneline').textContent = document.getElementById('oneline').value.trim() || '－';
   }
 
+  // save関数は超シンプルに戻した！！！
   function save(){
     const card = document.getElementById('card');
     const originalTransform = card.style.transform;
     card.style.transform = 'none';
 
-    // ロゴ画像を強制的に正方形にする神技！
-    const logoImg = document.getElementById('prevLogo');
-    if(logoImg.src){
-      logoImg.style.width = '80px';
-      logoImg.style.height = '80px';
-      logoImg.width = 80;
-      logoImg.height = 80;
-    }
-
     html2canvas(card, {
       scale: 3,
       useCORS: true,
-      backgroundColor: null,  // ← これで背景透過も完璧に残る！
+      backgroundColor: null,
       allowTaint: true
     }).then(canvas => {
       card.style.transform = originalTransform;
@@ -362,7 +358,7 @@
       }
     });
   }
-
+  
   function nativeShare(){
     if(navigator.share){
       navigator.share({title:'キャラ学生証作ったよ♡',url:location.href});
