@@ -69,20 +69,21 @@
       text-overflow:ellipsis;
     }
     .sub-right {text-align:right;font-size:16px;line-height:1.5;padding-top:60px;font-weight:680;}
+    /* ← 最終兵器！！！透過対応＋縦横比完全固定＋html2canvas完全対応 */
     .logo-img {
       position: absolute;
       top: -23px;
       right: -28px;
       width: 80px;
       height: 80px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      background: transparent !important;   /* ← 透過対応 */
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       z-index: 10;
-      display: none; /* 初期は非表示 */
+      display: none;
     }
     .middle {display:grid;grid-template-columns:240px 1fr;gap:30px;flex:1;margin-top:15px;}
     .photo-area {width:240px;height:220px;background:var(--photo-bg);border:11px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,0.16);}
@@ -338,12 +339,13 @@
     }
 
     html2canvas(card, {
-      scale:3,
-      useCORS:true,
-      backgroundColor:'#fffaf0',
-      logging:false
-    }).then(canvas=>{
+      scale: 3,
+      useCORS: true,
+      backgroundColor: null,  // ← これで背景透過も完璧に残る！
+      allowTaint: true
+    }).then(canvas => {
       card.style.transform = originalTransform;
+      // ダウンロード処理はそのまま
       if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         const a = document.createElement('a');
         a.download = 'studentcard.png';
